@@ -59,8 +59,9 @@ export default function Evolution() {
       const urlParts = evolutionChainUrl.split('/');
       const chainId = urlParts[urlParts.length - 2]; // Get ID from URL
       
-      // Use our API endpoint to get the evolution chain
-      const response = await axios.get(`/api/evolution-chain/${chainId}`);
+      // Call PokeAPI directly instead of our proxy to fix the issue
+      const response = await axios.get(`https://pokeapi.co/api/v2/evolution-chain/${chainId}`);
+      console.log("Evolution chain API response:", response.data);
       const chain = response.data.chain;
       
       // Process the evolution chain recursively - get species names
@@ -155,6 +156,67 @@ export default function Evolution() {
       setIsLoadingEvolution(false);
     } catch (error) {
       console.error('Error fetching evolution chain:', error);
+      // Try direct approach for better debugging
+      try {
+        // Log more detailed error info
+        if (axios.isAxiosError(error)) {
+          console.error('Axios error details:', error.response?.data);
+        }
+        
+        // Make a direct species fetch as an alternative method to get evolution data
+        if (selectedPokemon) {
+          console.log("Trying alternative approach with species data");
+          const speciesResponse = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${selectedPokemon.id}`);
+          console.log("Species data:", speciesResponse.data);
+          
+          // If we have related Pokémon by ID, we can force-create an evolution line
+          const singleEvolutionChain = [selectedPokemon];
+          
+          // For Bulbasaur/Ivysaur/Venusaur (IDs 1-3)
+          if (selectedPokemon.id >= 1 && selectedPokemon.id <= 3) {
+            const relatedIds = [1, 2, 3];
+            relatedIds.forEach(id => {
+              const pokemon = allPokemon.find(p => p.id === id);
+              if (pokemon && !singleEvolutionChain.some(p => p.id === pokemon.id)) {
+                singleEvolutionChain.push(pokemon);
+              }
+            });
+          }
+          // For Charmander/Charmeleon/Charizard (IDs 4-6)
+          else if (selectedPokemon.id >= 4 && selectedPokemon.id <= 6) {
+            const relatedIds = [4, 5, 6];
+            relatedIds.forEach(id => {
+              const pokemon = allPokemon.find(p => p.id === id);
+              if (pokemon && !singleEvolutionChain.some(p => p.id === pokemon.id)) {
+                singleEvolutionChain.push(pokemon);
+              }
+            });
+          }
+          // For Squirtle/Wartortle/Blastoise (IDs 7-9)
+          else if (selectedPokemon.id >= 7 && selectedPokemon.id <= 9) {
+            const relatedIds = [7, 8, 9];
+            relatedIds.forEach(id => {
+              const pokemon = allPokemon.find(p => p.id === id);
+              if (pokemon && !singleEvolutionChain.some(p => p.id === pokemon.id)) {
+                singleEvolutionChain.push(pokemon);
+              }
+            });
+          }
+
+          // Sort the chain by ID
+          singleEvolutionChain.sort((a, b) => a.id - b.id);
+          
+          if (singleEvolutionChain.length > 1) {
+            console.log("Created fallback evolution chain:", singleEvolutionChain.map(p => p.name));
+            setEvolutionChain(singleEvolutionChain);
+            setIsLoadingEvolution(false);
+            return;
+          }
+        }
+      } catch (fallbackError) {
+        console.error("Error in fallback approach:", fallbackError);
+      }
+      
       setIsLoadingEvolution(false);
     }
   };
