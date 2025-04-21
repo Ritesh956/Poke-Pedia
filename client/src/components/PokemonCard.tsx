@@ -95,7 +95,7 @@ export function PokemonCard({ pokemon, layout }: PokemonCardProps) {
               {pokemon.types.map((type) => (
                 <span 
                   key={type} 
-                  className="px-2 py-0.5 rounded-md text-xs font-medium text-white text-shadow"
+                  className="px-2 py-0.5 rounded-md text-xs font-medium text-white text-shadow inline-flex items-center justify-center h-6"
                   style={{ backgroundColor: getTypeColor(type) }}
                 >
                   {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -123,6 +123,7 @@ export function PokemonCard({ pokemon, layout }: PokemonCardProps) {
             src={pokemon.imageUrl} 
             alt={pokemon.name}
             className="w-full h-36 object-contain mx-auto" 
+            loading="lazy" // Add lazy loading for better performance
           />
           <div className="mt-2">
             <h3 className="text-lg font-medium text-[#E0E0E0] font-[Poppins]">{pokemon.name}</h3>
@@ -130,7 +131,7 @@ export function PokemonCard({ pokemon, layout }: PokemonCardProps) {
               {pokemon.types.map((type) => (
                 <span 
                   key={type} 
-                  className="px-2 py-0.5 rounded-md text-xs font-medium text-white text-shadow"
+                  className="px-2 py-0.5 rounded-md text-xs font-medium text-white text-shadow inline-flex items-center justify-center h-6"
                   style={{ backgroundColor: getTypeColor(type) }}
                 >
                   {type.charAt(0).toUpperCase() + type.slice(1)}

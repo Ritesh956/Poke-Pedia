@@ -1,6 +1,8 @@
 import { pokemonTypes, typeColors, PokemonType } from '@shared/schema';
 import { Badge } from '@/components/ui/badge';
 import { ViewToggle } from './ViewToggle';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 
 interface FilterBarProps {
   activeType: PokemonType | 'all';
@@ -8,6 +10,12 @@ interface FilterBarProps {
   pokemonCount: number;
   layout: 'grid' | 'box' | 'list';
   setLayout: (layout: 'grid' | 'box' | 'list') => void;
+  showLegendary: boolean;
+  setShowLegendary: (show: boolean) => void;
+  showMythical: boolean;
+  setShowMythical: (show: boolean) => void;
+  showBaby: boolean;
+  setShowBaby: (show: boolean) => void;
 }
 
 export function FilterBar({ activeType, setActiveType, pokemonCount, layout, setLayout }: FilterBarProps) {

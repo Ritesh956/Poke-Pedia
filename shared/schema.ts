@@ -60,6 +60,10 @@ export const pokemon = pgTable("pokemon", {
   imageUrl: text("image_url").notNull(),
   soundUrl: text("sound_url").notNull(),
   category: text("category").notNull(),
+  isLegendary: boolean("is_legendary").default(false),
+  isMythical: boolean("is_mythical").default(false),
+  isBaby: boolean("is_baby").default(false),
+  evolutionChainUrl: text("evolution_chain_url"),
 });
 
 export const pokemonSchema = createInsertSchema(pokemon);

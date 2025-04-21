@@ -61,6 +61,12 @@ interface SpeciesResponse {
       name: string;
     };
   }[];
+  is_legendary: boolean;
+  is_mythical: boolean;
+  is_baby: boolean;
+  evolution_chain: {
+    url: string;
+  };
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -198,6 +204,10 @@ async function initializePokemonData() {
         imageUrl: pokemonData.sprites.other['official-artwork'].front_default,
         soundUrl: `https://play.pokemonshowdown.com/audio/cries/${soundFileName}.mp3`,
         category,
+        isLegendary: speciesData.is_legendary,
+        isMythical: speciesData.is_mythical,
+        isBaby: speciesData.is_baby,
+        evolutionChainUrl: speciesData.evolution_chain?.url || null,
       };
       
       fetchedPokemon.push(pokemon);
