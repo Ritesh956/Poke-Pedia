@@ -51,9 +51,9 @@ export default function Compare() {
           
           <div>
             <Link href="/">
-              <a className="bg-[#7038F8] text-white px-4 py-2 rounded-full hover:bg-opacity-80 transition duration-200 font-medium">
+              <span className="bg-[#7038F8] text-white px-4 py-2 rounded-full hover:bg-opacity-80 transition duration-200 font-medium cursor-pointer">
                 Back to Pokédex
-              </a>
+              </span>
             </Link>
           </div>
         </div>

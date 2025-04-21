@@ -76,14 +76,14 @@ export default function Home() {
           {/* Navigation Links */}
           <div className="flex items-center space-x-4 mb-4 sm:mb-0">
             <Link href="/compare">
-              <a className="bg-[#7038F8] text-white px-3 py-1 rounded-full hover:bg-opacity-80 transition duration-200 text-sm font-medium">
+              <span className="bg-[#7038F8] text-white px-3 py-1 rounded-full hover:bg-opacity-80 transition duration-200 text-sm font-medium cursor-pointer">
                 Compare
-              </a>
+              </span>
             </Link>
             <Link href="/evolution">
-              <a className="bg-[#78C850] text-white px-3 py-1 rounded-full hover:bg-opacity-80 transition duration-200 text-sm font-medium">
+              <span className="bg-[#78C850] text-white px-3 py-1 rounded-full hover:bg-opacity-80 transition duration-200 text-sm font-medium cursor-pointer">
                 Evolution
-              </a>
+              </span>
             </Link>
           </div>
           

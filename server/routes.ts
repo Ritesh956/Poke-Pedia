@@ -132,6 +132,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }));
     res.json(types);
   });
+  
+  // API endpoint to get evolution chain by ID
+  app.get('/api/evolution-chain/:id', async (req, res) => {
+    try {
+      const chainId = req.params.id;
+      const response = await axios.get(`https://pokeapi.co/api/v2/evolution-chain/${chainId}`);
+      
+      res.json(response.data);
+    } catch (error) {
+      console.error('Error fetching evolution chain:', error);
+      res.status(500).json({ message: 'Error fetching evolution chain data' });
+    }
+  });
 
   return httpServer;
 }

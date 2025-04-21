@@ -56,29 +56,109 @@ export default function Evolution() {
       const urlParts = evolutionChainUrl.split('/');
       const chainId = urlParts[urlParts.length - 2]; // Get ID from URL
       
-      const response = await axios.get(`https://pokeapi.co/api/v2/evolution-chain/${chainId}`);
+      // Use our API endpoint to get the evolution chain
+      const response = await axios.get(`/api/evolution-chain/${chainId}`);
       const chain = response.data.chain;
       
-      // Process the evolution chain recursively
-      const evolutionData = processEvolutionChain(chain);
+      // Process the evolution chain recursively - get species names
+      const speciesNames = processEvolutionChain(chain);
       
-      // Map species names to our Pokemon data
-      const pokemonEvolutionChain = evolutionData
-        .map(name => {
-          // Find by normalized name (handle special characters and format)
-          return allPokemon.find(p => 
-            p.name.toLowerCase() === name.toLowerCase() ||
-            p.name.toLowerCase().replace('-', '') === name.toLowerCase().replace('-', '')
+      // Normalize names for better matching
+      const normalizedNames = speciesNames.map(name => name.toLowerCase());
+      
+      // Use an object to track already matched IDs to avoid duplicates
+      const matchedIds = new Set<number>();
+      const evolutionPokemons: Pokemon[] = [];
+      
+      // First try exact name matches (better for special forms)
+      normalizedNames.forEach(speciesName => {
+        const match = allPokemon.find(p => 
+          p.name.toLowerCase() === capitalizeFirstLetter(speciesName) && 
+          !matchedIds.has(p.id)
+        );
+        
+        if (match) {
+          matchedIds.add(match.id);
+          evolutionPokemons.push(match);
+        }
+      });
+      
+      // For any names that don't have matches, try a more flexible approach
+      normalizedNames.forEach(speciesName => {
+        // Skip if already matched
+        if (evolutionPokemons.some(p => p.name.toLowerCase() === capitalizeFirstLetter(speciesName))) {
+          return;
+        }
+        
+        // Try various matching approaches
+        const match = allPokemon.find(p => {
+          // Skip already matched IDs
+          if (matchedIds.has(p.id)) return false;
+          
+          const pokemonNameLower = p.name.toLowerCase();
+          
+          return (
+            // Match name with hyphens removed
+            pokemonNameLower.replace(/-/g, '') === speciesName.replace(/-/g, '') ||
+            // Match base name (before any hyphens)
+            pokemonNameLower.split('-')[0] === speciesName ||
+            // Match basic forms
+            speciesName.includes(pokemonNameLower.split('-')[0])
           );
-        })
-        .filter(pokemon => pokemon !== undefined) as Pokemon[];
+        });
+        
+        if (match) {
+          matchedIds.add(match.id);
+          evolutionPokemons.push(match);
+        }
+      });
       
-      setEvolutionChain(pokemonEvolutionChain);
+      // If we still have missing Pokémon, try a third approach with even more flexibility
+      if (evolutionPokemons.length < normalizedNames.length) {
+        // Log info for debugging
+        console.log('Evolution species names:', normalizedNames);
+        console.log('Matched Pokémon so far:', evolutionPokemons.map(p => p.name));
+        
+        // For each species name that doesn't have a match yet, find the best match
+        normalizedNames.forEach(speciesName => {
+          // Skip if already matched
+          if (evolutionPokemons.some(p => 
+            p.name.toLowerCase() === capitalizeFirstLetter(speciesName) ||
+            p.name.toLowerCase().replace(/-/g, '') === speciesName.replace(/-/g, '')
+          )) {
+            return;
+          }
+          
+          // Try to find a close match
+          const availablePokemon = allPokemon.filter(p => !matchedIds.has(p.id));
+          const baseName = speciesName.split('-')[0]; // Get base name before hyphens
+          
+          const bestMatch = availablePokemon.find(p => 
+            p.name.toLowerCase().includes(baseName) || 
+            baseName.includes(p.name.toLowerCase().split('-')[0])
+          );
+          
+          if (bestMatch) {
+            matchedIds.add(bestMatch.id);
+            evolutionPokemons.push(bestMatch);
+          }
+        });
+      }
+      
+      // Sort by ID to ensure correct evolution order if names have strange matching issues
+      evolutionPokemons.sort((a, b) => a.id - b.id);
+      
+      setEvolutionChain(evolutionPokemons);
       setIsLoadingEvolution(false);
     } catch (error) {
       console.error('Error fetching evolution chain:', error);
       setIsLoadingEvolution(false);
     }
+  };
+  
+  // Helper function to capitalize first letter
+  const capitalizeFirstLetter = (string: string): string => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
   
   // Function to extract Pokemon names from evolution chain recursively
@@ -115,9 +195,9 @@ export default function Evolution() {
           
           <div>
             <Link href="/">
-              <a className="bg-[#7038F8] text-white px-4 py-2 rounded-full hover:bg-opacity-80 transition duration-200 font-medium">
+              <span className="bg-[#7038F8] text-white px-4 py-2 rounded-full hover:bg-opacity-80 transition duration-200 font-medium cursor-pointer">
                 Back to Pokédex
-              </a>
+              </span>
             </Link>
           </div>
         </div>
@@ -156,9 +236,10 @@ export default function Evolution() {
           <div className="bg-[#1E1E1E] rounded-lg p-6">
             <h3 className="text-xl font-bold text-[#E0E0E0] mb-4">Evolution Line</h3>
             
+            {/* Responsive evolution chain display */}
             <div className="flex flex-wrap items-center justify-center gap-4">
               {evolutionChain.map((pokemon, index) => (
-                <div key={pokemon.id} className="flex items-center">
+                <div key={pokemon.id} className="flex flex-col sm:flex-row items-center mb-4">
                   {/* Pokemon Card */}
                   <div className="bg-[#2A2A2A] rounded-lg p-4 shadow-md w-64">
                     <div className="flex justify-between items-start mb-2">
@@ -207,13 +288,23 @@ export default function Evolution() {
                     )}
                   </div>
                   
-                  {/* Arrow to next evolution */}
+                  {/* Arrow to next evolution - different directions based on screen size */}
                   {index < evolutionChain.length - 1 && (
-                    <div className="mx-2 text-[#E0E0E0]">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </div>
+                    <>
+                      {/* Down arrow for mobile */}
+                      <div className="block sm:hidden my-2 text-[#E0E0E0]">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                        </svg>
+                      </div>
+                      
+                      {/* Right arrow for desktop */}
+                      <div className="hidden sm:block mx-4 text-[#E0E0E0]">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </div>
+                    </>
                   )}
                 </div>
               ))}
