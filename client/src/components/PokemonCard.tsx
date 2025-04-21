@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAudio } from '@/lib/useAudio';
-import { Pokemon } from '@shared/schema';
-import { typeColors } from '@shared/schema';
+import { Pokemon, PokemonType, pokemonTypes, typeColors } from '@shared/schema';
+import { useToast } from '@/hooks/use-toast';
 
 interface PokemonCardProps {
   pokemon: Pokemon;
@@ -10,14 +10,40 @@ interface PokemonCardProps {
 
 export function PokemonCard({ pokemon, layout }: PokemonCardProps) {
   const [isHovering, setIsHovering] = useState(false);
-  const { play } = useAudio({ 
-    src: pokemon.soundUrl,
+  const [hasSoundError, setHasSoundError] = useState(false);
+  const { toast } = useToast();
+  
+  // Format sound URL with better compatibility
+  const soundUrl = pokemon.soundUrl;
+  
+  // Try alternative URL if the original doesn't work
+  const altSoundUrl = pokemon.id <= 151 
+    ? `https://play.pokemonshowdown.com/audio/cries-old/${pokemon.name.toLowerCase().replace(/[^a-z0-9]/g, '')}.mp3` 
+    : null;
+  
+  // Use the appropriate sound URL
+  const { play, error } = useAudio({ 
+    src: hasSoundError && altSoundUrl ? altSoundUrl : soundUrl,
     preload: false
   });
+  
+  // Check for sound errors and try alternate URL if available
+  useEffect(() => {
+    if (error && !hasSoundError && altSoundUrl) {
+      setHasSoundError(true);
+    }
+  }, [error, hasSoundError, altSoundUrl]);
 
   const handleMouseEnter = () => {
     setIsHovering(true);
-    play();
+    
+    // Play the sound with error handling
+    try {
+      play();
+    } catch (err) {
+      // Silent fallback, don't show errors to users
+      console.log(`Sound playback issue for ${pokemon.name}`);
+    }
   };
 
   const handleMouseLeave = () => {
@@ -32,6 +58,16 @@ export function PokemonCard({ pokemon, layout }: PokemonCardProps) {
     grid: "pokemon-card bg-[#1E1E1E] rounded-lg overflow-hidden shadow-lg transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-xl",
     box: "pokemon-card bg-[#1E1E1E] rounded-lg overflow-hidden shadow-lg transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-xl h-full",
     list: "pokemon-card bg-[#1E1E1E] rounded-lg overflow-hidden shadow-lg transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-xl flex"
+  };
+
+  // Helper function to get color for a given type
+  const getTypeColor = (type: string): string => {
+    // Check if the type is in the valid PokemonType list
+    if (pokemonTypes.includes(type as PokemonType)) {
+      return typeColors[type as PokemonType];
+    }
+    // Fallback color for unknown types
+    return '#718096';
   };
 
   return (
@@ -60,7 +96,7 @@ export function PokemonCard({ pokemon, layout }: PokemonCardProps) {
                 <span 
                   key={type} 
                   className="px-2 py-0.5 rounded-md text-xs font-medium text-white text-shadow"
-                  style={{ backgroundColor: typeColors[type] }}
+                  style={{ backgroundColor: getTypeColor(type) }}
                 >
                   {type.charAt(0).toUpperCase() + type.slice(1)}
                 </span>
@@ -95,7 +131,7 @@ export function PokemonCard({ pokemon, layout }: PokemonCardProps) {
                 <span 
                   key={type} 
                   className="px-2 py-0.5 rounded-md text-xs font-medium text-white text-shadow"
-                  style={{ backgroundColor: typeColors[type] }}
+                  style={{ backgroundColor: getTypeColor(type) }}
                 >
                   {type.charAt(0).toUpperCase() + type.slice(1)}
                 </span>
