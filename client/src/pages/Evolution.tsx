@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Pokemon as BasePokemon, PokemonType, typeColors } from '@shared/schema';
 import { Link } from 'wouter';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/Footer';
 import axios from 'axios';
 
@@ -24,6 +26,7 @@ interface EvolutionChain {
 
 export default function Evolution() {
   const [selectedPokemonId, setSelectedPokemonId] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [evolutionChain, setEvolutionChain] = useState<Pokemon[]>([]);
   const [isLoadingEvolution, setIsLoadingEvolution] = useState(false);
   
@@ -207,24 +210,74 @@ export default function Evolution() {
       <main className="container mx-auto px-4 sm:px-6 md:px-8 py-6">
         <h2 className="text-2xl font-bold font-[Poppins] text-[#E0E0E0] mb-6">Evolution Lines</h2>
         
-        {/* Pokemon Selection */}
-        <div className="mb-8">
-          <label className="block mb-2 text-[#E0E0E0] font-medium">Select a Pokémon</label>
-          <Select value={selectedPokemonId} onValueChange={setSelectedPokemonId}>
-            <SelectTrigger className="bg-[#2E2E2E] border-[#444444] text-[#E0E0E0]">
-              <SelectValue placeholder="Select a Pokémon" />
-            </SelectTrigger>
-            <SelectContent className="bg-[#2E2E2E] border-[#444444] text-[#E0E0E0]">
-              {sortedPokemon.map(pokemon => (
-                <SelectItem 
-                  key={pokemon.id} 
-                  value={pokemon.id.toString()}
+        {/* Pokemon Search & Selection */}
+        <div className="mb-8 space-y-4">
+          <div>
+            <label className="block mb-2 text-[#E0E0E0] font-medium">Search by Name</label>
+            <div className="flex gap-2">
+              <Input
+                placeholder="Search Pokémon by name..."
+                className="bg-[#2E2E2E] border-[#444444] text-[#E0E0E0]"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button 
+                onClick={() => {
+                  const foundPokemon = allPokemon.find(p => 
+                    p.name.toLowerCase().includes(searchQuery.toLowerCase())
+                  );
+                  if (foundPokemon) {
+                    setSelectedPokemonId(foundPokemon.id.toString());
+                  }
+                }}
+                className="bg-[#7038F8] hover:bg-[#5f2ecc]"
+              >
+                Search
+              </Button>
+            </div>
+            <p className="text-xs text-[#999] mt-1">Example: Search for "Charmander" to see the full Charmander evolution line</p>
+          </div>
+          
+          <div className="mt-6">
+            <label className="block mb-2 text-[#E0E0E0] font-medium">Or Select a Pokémon</label>
+            <Select value={selectedPokemonId} onValueChange={setSelectedPokemonId}>
+              <SelectTrigger className="bg-[#2E2E2E] border-[#444444] text-[#E0E0E0]">
+                <SelectValue placeholder="Select a Pokémon" />
+              </SelectTrigger>
+              <SelectContent className="bg-[#2E2E2E] border-[#444444] text-[#E0E0E0] max-h-[320px]">
+                {sortedPokemon.map(pokemon => (
+                  <SelectItem 
+                    key={pokemon.id} 
+                    value={pokemon.id.toString()}
+                  >
+                    {`#${pokemon.id.toString().padStart(3, '0')} - ${pokemon.name}`}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          
+          {/* Quick examples for popular evolution chains */}
+          <div className="pt-2">
+            <p className="text-sm text-[#BBB] mb-2">Popular Evolution Chains:</p>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { name: "Bulbasaur", id: "1" },
+                { name: "Charmander", id: "4" },
+                { name: "Squirtle", id: "7" },
+                { name: "Pikachu", id: "25" },
+                { name: "Eevee", id: "133" }
+              ].map(pokemon => (
+                <button
+                  key={pokemon.id}
+                  onClick={() => setSelectedPokemonId(pokemon.id)}
+                  className="text-sm px-2 py-1 rounded-full bg-[#333] text-[#E0E0E0] hover:bg-[#444] transition-colors"
                 >
-                  {`#${pokemon.id.toString().padStart(3, '0')} - ${pokemon.name}`}
-                </SelectItem>
+                  {pokemon.name}
+                </button>
               ))}
-            </SelectContent>
-          </Select>
+            </div>
+          </div>
         </div>
         
         {/* Evolution Chain Display */}
@@ -236,79 +289,80 @@ export default function Evolution() {
           <div className="bg-[#1E1E1E] rounded-lg p-6">
             <h3 className="text-xl font-bold text-[#E0E0E0] mb-4">Evolution Line</h3>
             
-            {/* Responsive evolution chain display */}
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              {evolutionChain.map((pokemon, index) => (
-                <div key={pokemon.id} className="flex flex-col sm:flex-row items-center mb-4">
-                  {/* Pokemon Card */}
-                  <div className="bg-[#2A2A2A] rounded-lg p-4 shadow-md w-64">
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="text-lg font-medium text-[#E0E0E0]">{pokemon.name}</h4>
-                      <span className="text-[#A0A0A0]">#{pokemon.id.toString().padStart(3, '0')}</span>
+            {/* Improved evolution chain display for better visibility */}
+            <div className="w-full overflow-x-auto py-4">
+              <div className="flex flex-nowrap items-center justify-start min-w-max px-4">
+                {evolutionChain.map((pokemon, index) => (
+                  <div key={pokemon.id} className="flex flex-row items-center">
+                    {/* Pokemon Card with enhanced styles */}
+                    <div className="bg-[#2A2A2A] rounded-lg p-4 shadow-lg border border-[#3A3A3A] transition-all hover:shadow-xl hover:border-[#505050] w-72">
+                      <div className="flex justify-between items-start mb-2">
+                        <h4 className="text-lg font-medium text-white">{pokemon.name}</h4>
+                        <span className="text-[#FFD700] font-mono">#{pokemon.id.toString().padStart(3, '0')}</span>
+                      </div>
+                      
+                      <img 
+                        src={pokemon.imageUrl} 
+                        alt={pokemon.name}
+                        className="w-full h-40 object-contain mb-3 drop-shadow-md" 
+                        loading="lazy"
+                      />
+                      
+                      <div className="flex flex-wrap gap-1.5 mb-3">
+                        {pokemon.types.map(type => (
+                          <span 
+                            key={`${pokemon.id}-${type}`} 
+                            className="px-3 py-1 rounded-md text-sm font-medium text-white text-shadow inline-flex items-center justify-center shadow-sm"
+                            style={{ backgroundColor: typeColors[type as PokemonType] }}
+                          >
+                            {type.charAt(0).toUpperCase() + type.slice(1)}
+                          </span>
+                        ))}
+                      </div>
+                      
+                      {/* Enhanced special tags */}
+                      {(pokemon.isLegendary || pokemon.isMythical || pokemon.isBaby) && (
+                        <div className="flex gap-2 flex-wrap mt-2">
+                          {pokemon.isLegendary && (
+                            <span className="px-2 py-1 bg-gradient-to-r from-yellow-600 to-yellow-500 text-white text-xs rounded-full font-medium shadow-sm">
+                              Legendary
+                            </span>
+                          )}
+                          {pokemon.isMythical && (
+                            <span className="px-2 py-1 bg-gradient-to-r from-pink-600 to-pink-500 text-white text-xs rounded-full font-medium shadow-sm">
+                              Mythical
+                            </span>
+                          )}
+                          {pokemon.isBaby && (
+                            <span className="px-2 py-1 bg-gradient-to-r from-blue-500 to-blue-400 text-white text-xs rounded-full font-medium shadow-sm">
+                              Baby
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
                     
-                    <img 
-                      src={pokemon.imageUrl} 
-                      alt={pokemon.name}
-                      className="w-full h-36 object-contain mb-3" 
-                      loading="lazy"
-                    />
-                    
-                    <div className="flex flex-wrap gap-1 mb-2">
-                      {pokemon.types.map(type => (
-                        <span 
-                          key={`${pokemon.id}-${type}`} 
-                          className="px-2 py-0.5 rounded-md text-xs font-medium text-white text-shadow inline-flex items-center justify-center h-6"
-                          style={{ backgroundColor: typeColors[type as PokemonType] }}
-                        >
-                          {type.charAt(0).toUpperCase() + type.slice(1)}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    {/* Special tags if applicable */}
-                    {(pokemon.isLegendary || pokemon.isMythical || pokemon.isBaby) && (
-                      <div className="flex gap-1 flex-wrap">
-                        {pokemon.isLegendary && (
-                          <span className="px-1.5 py-0.5 bg-yellow-600 text-white text-xs rounded-full">
-                            Legendary
-                          </span>
-                        )}
-                        {pokemon.isMythical && (
-                          <span className="px-1.5 py-0.5 bg-pink-600 text-white text-xs rounded-full">
-                            Mythical
-                          </span>
-                        )}
-                        {pokemon.isBaby && (
-                          <span className="px-1.5 py-0.5 bg-blue-400 text-white text-xs rounded-full">
-                            Baby
-                          </span>
-                        )}
+                    {/* Arrow to next evolution with animated gradient */}
+                    {index < evolutionChain.length - 1 && (
+                      <div className="mx-4 text-white">
+                        <div className="relative w-16 h-16 flex items-center justify-center bg-gradient-to-r from-[#3A3A3A] to-[#2A2A2A] rounded-full shadow-md">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </div>
                       </div>
                     )}
                   </div>
-                  
-                  {/* Arrow to next evolution - different directions based on screen size */}
-                  {index < evolutionChain.length - 1 && (
-                    <>
-                      {/* Down arrow for mobile */}
-                      <div className="block sm:hidden my-2 text-[#E0E0E0]">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                        </svg>
-                      </div>
-                      
-                      {/* Right arrow for desktop */}
-                      <div className="hidden sm:block mx-4 text-[#E0E0E0]">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                      </div>
-                    </>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+            
+            {/* Horizontal scrolling hint */}
+            {evolutionChain.length > 2 && (
+              <div className="mt-3 text-center text-[#A0A0A0] text-sm">
+                <p>Swipe or scroll horizontally to see the full evolution chain</p>
+              </div>
+            )}
           </div>
         ) : selectedPokemonId ? (
           <div className="bg-[#1E1E1E] rounded-lg p-6 text-center">
