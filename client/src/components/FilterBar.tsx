@@ -18,7 +18,19 @@ interface FilterBarProps {
   setShowBaby: (show: boolean) => void;
 }
 
-export function FilterBar({ activeType, setActiveType, pokemonCount, layout, setLayout }: FilterBarProps) {
+export function FilterBar({ 
+  activeType, 
+  setActiveType, 
+  pokemonCount, 
+  layout, 
+  setLayout,
+  showLegendary,
+  setShowLegendary,
+  showMythical,
+  setShowMythical,
+  showBaby,
+  setShowBaby
+}: FilterBarProps) {
   return (
     <div className="mb-8">
       <div className="flex flex-wrap gap-3 items-center mb-4">
@@ -49,6 +61,55 @@ export function FilterBar({ activeType, setActiveType, pokemonCount, layout, set
               {type.charAt(0).toUpperCase() + type.slice(1)}
             </Badge>
           ))}
+        </div>
+      </div>
+      
+      {/* Special Pokemon Filters */}
+      <div className="flex flex-wrap gap-6 items-center mb-4">
+        <h2 className="text-xl font-[Poppins] font-semibold text-[#E0E0E0]">Special Pokémon:</h2>
+        
+        <div className="flex flex-wrap gap-4">
+          <div className="flex items-center space-x-2">
+            <Switch 
+              id="legendary-filter" 
+              checked={showLegendary}
+              onCheckedChange={setShowLegendary}
+            />
+            <Label 
+              htmlFor="legendary-filter" 
+              className="text-[#E0E0E0] cursor-pointer"
+            >
+              Legendary
+            </Label>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <Switch 
+              id="mythical-filter" 
+              checked={showMythical}
+              onCheckedChange={setShowMythical}
+            />
+            <Label 
+              htmlFor="mythical-filter" 
+              className="text-[#E0E0E0] cursor-pointer"
+            >
+              Mythical
+            </Label>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <Switch 
+              id="baby-filter" 
+              checked={showBaby}
+              onCheckedChange={setShowBaby}
+            />
+            <Label 
+              htmlFor="baby-filter" 
+              className="text-[#E0E0E0] cursor-pointer"
+            >
+              Baby
+            </Label>
+          </div>
         </div>
       </div>
       

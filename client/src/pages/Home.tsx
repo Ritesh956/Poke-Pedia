@@ -1,23 +1,33 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Pokemon, PokemonType } from '@shared/schema';
+import { Pokemon as BasePokemon, PokemonType } from '@shared/schema';
 import { SearchBar } from '@/components/SearchBar';
 import { FilterBar } from '@/components/FilterBar';
 import { PokemonGrid } from '@/components/PokemonGrid';
 import { Footer } from '@/components/Footer';
+
+// Extended Pokemon interface to handle optional special properties
+interface Pokemon extends BasePokemon {
+  isLegendary: boolean;
+  isMythical: boolean;
+  isBaby: boolean;
+}
 
 export default function Home() {
   // State for filtering and display
   const [activeType, setActiveType] = useState<PokemonType | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [layout, setLayout] = useState<'grid' | 'box' | 'list'>('grid');
+  const [showLegendary, setShowLegendary] = useState(false);
+  const [showMythical, setShowMythical] = useState(false);
+  const [showBaby, setShowBaby] = useState(false);
   
   // Fetch all Pokemon data
   const { data: allPokemon = [], isLoading } = useQuery<Pokemon[]>({
     queryKey: ['/api/pokemon'],
   });
   
-  // Filter Pokemon based on type and search query
+  // Filter Pokemon based on type, search query, and special categories
   const filteredPokemon = allPokemon.filter(pokemon => {
     // Type filter
     const matchesType = activeType === 'all' || pokemon.types.includes(activeType);
@@ -25,7 +35,19 @@ export default function Home() {
     // Search filter (case insensitive)
     const matchesSearch = pokemon.name.toLowerCase().includes(searchQuery.toLowerCase());
     
-    return matchesType && matchesSearch;
+    // Special category filters
+    let matchesSpecialCategories = true;
+    
+    // If any special category filter is active
+    if (showLegendary || showMythical || showBaby) {
+      matchesSpecialCategories = (
+        (showLegendary && pokemon.isLegendary === true) ||
+        (showMythical && pokemon.isMythical === true) ||
+        (showBaby && pokemon.isBaby === true)
+      );
+    }
+    
+    return matchesType && matchesSearch && matchesSpecialCategories;
   });
   
   // Sort Pokemon by ID
@@ -64,6 +86,12 @@ export default function Home() {
           pokemonCount={filteredPokemon.length}
           layout={layout}
           setLayout={setLayout}
+          showLegendary={showLegendary}
+          setShowLegendary={setShowLegendary}
+          showMythical={showMythical}
+          setShowMythical={setShowMythical}
+          showBaby={showBaby}
+          setShowBaby={setShowBaby}
         />
         
         {/* Pokemon Grid - Show All Pokemon at once */}
