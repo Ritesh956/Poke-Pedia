@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'wouter';
 import { Pokemon as BasePokemon, PokemonType } from '@shared/schema';
 import { SearchBar } from '@/components/SearchBar';
 import { FilterBar } from '@/components/FilterBar';
@@ -70,6 +71,20 @@ export default function Home() {
               <path d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm8-6a6 6 0 100 12 6 6 0 000-12z" fillRule="evenodd" clipRule="evenodd" />
             </svg>
             <h1 className="text-2xl font-bold font-[Poppins] text-[#E0E0E0]">PokéDex</h1>
+          </div>
+          
+          {/* Navigation Links */}
+          <div className="flex items-center space-x-4 mb-4 sm:mb-0">
+            <Link href="/compare">
+              <a className="bg-[#7038F8] text-white px-3 py-1 rounded-full hover:bg-opacity-80 transition duration-200 text-sm font-medium">
+                Compare
+              </a>
+            </Link>
+            <Link href="/evolution">
+              <a className="bg-[#78C850] text-white px-3 py-1 rounded-full hover:bg-opacity-80 transition duration-200 text-sm font-medium">
+                Evolution
+              </a>
+            </Link>
           </div>
           
           {/* Search Box */}

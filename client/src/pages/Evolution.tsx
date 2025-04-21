@@ -11,7 +11,7 @@ interface Pokemon extends BasePokemon {
   isLegendary: boolean;
   isMythical: boolean;
   isBaby: boolean;
-  evolutionChainUrl?: string;
+  evolutionChainUrl: string | null;
 }
 
 interface EvolutionChain {
