@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Pokemon, PokemonType } from '@shared/schema';
 import { SearchBar } from '@/components/SearchBar';
 import { FilterBar } from '@/components/FilterBar';
 import { PokemonGrid } from '@/components/PokemonGrid';
-import { LoadMoreButton } from '@/components/LoadMoreButton';
 import { Footer } from '@/components/Footer';
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
   const [activeType, setActiveType] = useState<PokemonType | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [layout, setLayout] = useState<'grid' | 'box' | 'list'>('grid');
-  const [displayLimit, setDisplayLimit] = useState(20);
   
   // Fetch all Pokemon data
   const { data: allPokemon = [], isLoading } = useQuery<Pokemon[]>({
@@ -30,23 +28,8 @@ export default function Home() {
     return matchesType && matchesSearch;
   });
   
-  // Get Pokemon to display based on limit
-  const displayedPokemon = filteredPokemon.slice(0, displayLimit);
-  
-  // Reset display limit when filters change
-  useEffect(() => {
-    setDisplayLimit(20);
-  }, [activeType, searchQuery]);
-  
-  // Handle load more
-  const handleLoadMore = async () => {
-    // Simulate loading delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    setDisplayLimit(prevLimit => prevLimit + 20);
-  };
-  
-  // Determine if there are more Pokemon to load
-  const hasMore = displayedPokemon.length < filteredPokemon.length;
+  // Sort Pokemon by ID
+  const sortedPokemon = [...filteredPokemon].sort((a, b) => a.id - b.id);
   
   return (
     <div className="min-h-screen bg-background font-roboto">
@@ -83,20 +66,23 @@ export default function Home() {
           setLayout={setLayout}
         />
         
-        {/* Pokemon Grid */}
+        {/* Pokemon Grid - Show All Pokemon at once */}
         <PokemonGrid 
-          pokemons={displayedPokemon} 
+          pokemons={sortedPokemon} 
           isLoading={isLoading} 
           layout={layout} 
         />
         
-        {/* Load More Button */}
-        {!isLoading && (
-          <LoadMoreButton 
-            onClick={handleLoadMore} 
-            isLoading={false}
-            hasMore={hasMore}
-          />
+        {/* Back to top button for performance */}
+        {!isLoading && sortedPokemon.length > 50 && (
+          <div className="mt-8 text-center">
+            <button 
+              className="bg-[#7038F8] text-white px-6 py-2 rounded-full hover:bg-opacity-80 transition duration-200 font-medium"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              Back to Top
+            </button>
+          </div>
         )}
       </main>
       
