@@ -1,120 +1,66 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { Howl } from 'howler';
-
-interface UseAudioProps {
-  src: string;
-  volume?: number;
-  preload?: boolean;
-  timeout?: number; // Timeout in ms to wait for sound loading
-}
-
-export const useAudio = ({ 
-  src, 
-  volume = 0.5, 
-  preload = false,
-  timeout = 3000 // Default 3s timeout
-}: UseAudioProps) => {
-  const [sound, setSound] = useState<Howl | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const soundRef = useRef<Howl | null>(null);
-  const loadTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
+import { useEffect, useRef, useState } from 'react';
+let active: HTMLAudioElement | null = null;
+export function useAudio({ src }: { src: string | null }) {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [status, setStatus] = useState<
+    'idle' | 'loading' | 'playing' | 'error'
+  >('idle');
   useEffect(() => {
-    // Clear any previous timeout
-    if (loadTimeoutRef.current) {
-      clearTimeout(loadTimeoutRef.current);
-    }
-
-    // Reset error state when src changes
-    setError(null);
-
-    // Create new Howl instance
-    const howl = new Howl({
-      src: [src],
-      volume,
-      preload,
-      html5: true, // Better for streaming
-      format: ['mp3'],
-      onload: () => {
-        if (loadTimeoutRef.current) {
-          clearTimeout(loadTimeoutRef.current);
-        }
-        setIsLoaded(true);
-        setError(null);
-      },
-      onloaderror: (id, message) => {
-        setError(`Error loading sound: ${message || 'Unknown error'}`);
-        setIsLoaded(false);
-      },
-      onplay: () => {
-        setIsPlaying(true);
-      },
-      onend: () => {
-        setIsPlaying(false);
-      },
-      onstop: () => {
-        setIsPlaying(false);
-      },
-      onpause: () => {
-        setIsPlaying(false);
-      }
-    });
-
-    // Set load timeout
-    loadTimeoutRef.current = setTimeout(() => {
-      if (!isLoaded) {
-        setError(`Timeout loading sound: ${src}`);
-        if (howl) {
-          howl.unload();
-        }
-      }
-    }, timeout);
-
-    // Update states
-    setSound(howl);
-    soundRef.current = howl;
-
-    // Cleanup on unmount or when src changes
+    setStatus('idle');
     return () => {
-      if (loadTimeoutRef.current) {
-        clearTimeout(loadTimeoutRef.current);
-      }
-      if (howl) {
-        howl.unload();
+      if (timerRef.current) clearTimeout(timerRef.current);
+      const audio = audioRef.current;
+      if (audio) {
+        audio.onplaying = audio.onended = audio.onpause = audio.onerror = null;
+        audio.pause();
+        audio.removeAttribute('src');
+        audio.load();
+        if (active === audio) active = null;
+        audioRef.current = null;
       }
     };
-  }, [src, volume, preload, timeout]);
-
-  const play = useCallback(() => {
-    if (soundRef.current && !isPlaying) {
-      try {
-        soundRef.current.play();
-      } catch (err) {
-        setError(`Error playing sound: ${err}`);
-      }
+  }, [src]);
+  const play = async () => {
+    if (!src || status === 'loading') return;
+    if (status === 'playing') {
+      audioRef.current?.pause();
+      setStatus('idle');
+      return;
     }
-  }, [isPlaying]);
-
-  const stop = useCallback(() => {
-    if (soundRef.current && isPlaying) {
-      soundRef.current.stop();
+    if (active) active.pause();
+    const audio = audioRef.current ?? new Audio(src);
+    audioRef.current = audio;
+    active = audio;
+    audio.volume = 0.5;
+    audio.currentTime = 0;
+    setStatus('loading');
+    const clear = () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = null;
+    };
+    audio.onplaying = () => {
+      clear();
+      setStatus('playing');
+    };
+    audio.onended = audio.onpause = () => {
+      clear();
+      setStatus('idle');
+    };
+    audio.onerror = () => {
+      clear();
+      setStatus('error');
+    };
+    timerRef.current = setTimeout(() => {
+      audio.pause();
+      setStatus('error');
+    }, 10000);
+    try {
+      await audio.play();
+    } catch {
+      clear();
+      if (audioRef.current === audio) setStatus('error');
     }
-  }, [isPlaying]);
-
-  const pause = useCallback(() => {
-    if (soundRef.current && isPlaying) {
-      soundRef.current.pause();
-    }
-  }, [isPlaying]);
-
-  return {
-    play,
-    stop,
-    pause,
-    isLoaded,
-    isPlaying,
-    error
   };
-};
+  return { play, status };
+}

@@ -1,444 +1,193 @@
-import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Pokemon as BasePokemon, PokemonType, typeColors } from '@shared/schema';
 import { Link } from 'wouter';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Footer } from '@/components/Footer';
-import axios from 'axios';
-
-// Extended Pokemon interface to handle optional special properties
-interface Pokemon extends BasePokemon {
-  isLegendary: boolean;
-  isMythical: boolean;
-  isBaby: boolean;
-  evolutionChainUrl: string | null;
-}
-
-interface EvolutionChain {
-  species: {
-    name: string;
-    url: string;
-  };
-  evolves_to: EvolutionChain[];
-}
-
-export default function Evolution() {
-  const [selectedPokemonId, setSelectedPokemonId] = useState<string>('');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [evolutionChain, setEvolutionChain] = useState<Pokemon[]>([]);
-  const [isLoadingEvolution, setIsLoadingEvolution] = useState(false);
-  
-  // Fetch all Pokemon data for selection
-  const { data: allPokemon = [], isLoading } = useQuery<Pokemon[]>({
-    queryKey: ['/api/pokemon'],
-  });
-  
-  // Sort Pokemon by ID for dropdown
-  const sortedPokemon = [...allPokemon].sort((a, b) => a.id - b.id);
-  
-  // Get selected Pokemon
-  const selectedPokemon = sortedPokemon.find(p => p.id.toString() === selectedPokemonId);
-  
-  // Fetch evolution chain when Pokemon is selected
-  useEffect(() => {
-    if (selectedPokemon?.evolutionChainUrl) {
-      fetchEvolutionChain(selectedPokemon.evolutionChainUrl);
-    } else {
-      setEvolutionChain([]);
-    }
-  }, [selectedPokemonId, allPokemon]);
-  
-  // Function to fetch evolution chain data
-  const fetchEvolutionChain = async (evolutionChainUrl: string) => {
-    try {
-      setIsLoadingEvolution(true);
-      
-      // Extract ID from URL
-      const urlParts = evolutionChainUrl.split('/');
-      const chainId = urlParts[urlParts.length - 2]; // Get ID from URL
-      
-      // Call PokeAPI directly instead of our proxy to fix the issue
-      const response = await axios.get(`https://pokeapi.co/api/v2/evolution-chain/${chainId}`);
-      console.log("Evolution chain API response:", response.data);
-      const chain = response.data.chain;
-      
-      // Process the evolution chain recursively - get species names
-      const speciesNames = processEvolutionChain(chain);
-      
-      // Normalize names for better matching
-      const normalizedNames = speciesNames.map(name => name.toLowerCase());
-      
-      // Use an object to track already matched IDs to avoid duplicates
-      const matchedIds = new Set<number>();
-      const evolutionPokemons: Pokemon[] = [];
-      
-      // First try exact name matches (better for special forms)
-      normalizedNames.forEach(speciesName => {
-        const match = allPokemon.find(p => 
-          p.name.toLowerCase() === capitalizeFirstLetter(speciesName) && 
-          !matchedIds.has(p.id)
-        );
-        
-        if (match) {
-          matchedIds.add(match.id);
-          evolutionPokemons.push(match);
-        }
-      });
-      
-      // For any names that don't have matches, try a more flexible approach
-      normalizedNames.forEach(speciesName => {
-        // Skip if already matched
-        if (evolutionPokemons.some(p => p.name.toLowerCase() === capitalizeFirstLetter(speciesName))) {
-          return;
-        }
-        
-        // Try various matching approaches
-        const match = allPokemon.find(p => {
-          // Skip already matched IDs
-          if (matchedIds.has(p.id)) return false;
-          
-          const pokemonNameLower = p.name.toLowerCase();
-          
-          return (
-            // Match name with hyphens removed
-            pokemonNameLower.replace(/-/g, '') === speciesName.replace(/-/g, '') ||
-            // Match base name (before any hyphens)
-            pokemonNameLower.split('-')[0] === speciesName ||
-            // Match basic forms
-            speciesName.includes(pokemonNameLower.split('-')[0])
-          );
-        });
-        
-        if (match) {
-          matchedIds.add(match.id);
-          evolutionPokemons.push(match);
-        }
-      });
-      
-      // If we still have missing Pokémon, try a third approach with even more flexibility
-      if (evolutionPokemons.length < normalizedNames.length) {
-        // Log info for debugging
-        console.log('Evolution species names:', normalizedNames);
-        console.log('Matched Pokémon so far:', evolutionPokemons.map(p => p.name));
-        
-        // For each species name that doesn't have a match yet, find the best match
-        normalizedNames.forEach(speciesName => {
-          // Skip if already matched
-          if (evolutionPokemons.some(p => 
-            p.name.toLowerCase() === capitalizeFirstLetter(speciesName) ||
-            p.name.toLowerCase().replace(/-/g, '') === speciesName.replace(/-/g, '')
-          )) {
-            return;
-          }
-          
-          // Try to find a close match
-          const availablePokemon = allPokemon.filter(p => !matchedIds.has(p.id));
-          const baseName = speciesName.split('-')[0]; // Get base name before hyphens
-          
-          const bestMatch = availablePokemon.find(p => 
-            p.name.toLowerCase().includes(baseName) || 
-            baseName.includes(p.name.toLowerCase().split('-')[0])
-          );
-          
-          if (bestMatch) {
-            matchedIds.add(bestMatch.id);
-            evolutionPokemons.push(bestMatch);
-          }
-        });
-      }
-      
-      // Sort by ID to ensure correct evolution order if names have strange matching issues
-      evolutionPokemons.sort((a, b) => a.id - b.id);
-      
-      setEvolutionChain(evolutionPokemons);
-      setIsLoadingEvolution(false);
-    } catch (error) {
-      console.error('Error fetching evolution chain:', error);
-      // Try direct approach for better debugging
-      try {
-        // Log more detailed error info
-        if (axios.isAxiosError(error)) {
-          console.error('Axios error details:', error.response?.data);
-        }
-        
-        // Make a direct species fetch as an alternative method to get evolution data
-        if (selectedPokemon) {
-          console.log("Trying alternative approach with species data");
-          const speciesResponse = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${selectedPokemon.id}`);
-          console.log("Species data:", speciesResponse.data);
-          
-          // If we have related Pokémon by ID, we can force-create an evolution line
-          const singleEvolutionChain = [selectedPokemon];
-          
-          // For Bulbasaur/Ivysaur/Venusaur (IDs 1-3)
-          if (selectedPokemon.id >= 1 && selectedPokemon.id <= 3) {
-            const relatedIds = [1, 2, 3];
-            relatedIds.forEach(id => {
-              const pokemon = allPokemon.find(p => p.id === id);
-              if (pokemon && !singleEvolutionChain.some(p => p.id === pokemon.id)) {
-                singleEvolutionChain.push(pokemon);
-              }
-            });
-          }
-          // For Charmander/Charmeleon/Charizard (IDs 4-6)
-          else if (selectedPokemon.id >= 4 && selectedPokemon.id <= 6) {
-            const relatedIds = [4, 5, 6];
-            relatedIds.forEach(id => {
-              const pokemon = allPokemon.find(p => p.id === id);
-              if (pokemon && !singleEvolutionChain.some(p => p.id === pokemon.id)) {
-                singleEvolutionChain.push(pokemon);
-              }
-            });
-          }
-          // For Squirtle/Wartortle/Blastoise (IDs 7-9)
-          else if (selectedPokemon.id >= 7 && selectedPokemon.id <= 9) {
-            const relatedIds = [7, 8, 9];
-            relatedIds.forEach(id => {
-              const pokemon = allPokemon.find(p => p.id === id);
-              if (pokemon && !singleEvolutionChain.some(p => p.id === pokemon.id)) {
-                singleEvolutionChain.push(pokemon);
-              }
-            });
-          }
-
-          // Sort the chain by ID
-          singleEvolutionChain.sort((a, b) => a.id - b.id);
-          
-          if (singleEvolutionChain.length > 1) {
-            console.log("Created fallback evolution chain:", singleEvolutionChain.map(p => p.name));
-            setEvolutionChain(singleEvolutionChain);
-            setIsLoadingEvolution(false);
-            return;
-          }
-        }
-      } catch (fallbackError) {
-        console.error("Error in fallback approach:", fallbackError);
-      }
-      
-      setIsLoadingEvolution(false);
-    }
-  };
-  
-  // Helper function to capitalize first letter
-  const capitalizeFirstLetter = (string: string): string => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
-  
-  // Function to extract Pokemon names from evolution chain recursively
-  const processEvolutionChain = (chain: EvolutionChain): string[] => {
-    let results: string[] = [chain.species.name];
-    
-    if (chain.evolves_to && chain.evolves_to.length > 0) {
-      chain.evolves_to.forEach(evolution => {
-        results = [...results, ...processEvolutionChain(evolution)];
-      });
-    }
-    
-    return results;
-  };
-  
+import type { EvolutionNode, Pokemon } from '@shared/schema';
+import { useCatalogue, useEvolution } from '@/lib/pokemonData';
+import { useUrlState } from '@/lib/urlState';
+import { AppShell, RequestState } from '@/components/AppShell';
+import { PokemonSelector } from '@/components/PokemonSelector';
+import { PokemonImage } from '@/components/PokemonImage';
+import { TypeBadge } from '@/components/TypeBadge';
+import { conditionsForGame } from '@shared/reference';
+import { displayName } from '@shared/pokemon';
+function Branch({
+  node,
+  records,
+  selected,
+  game,
+}: {
+  node: EvolutionNode;
+  records: Map<number, Pokemon>;
+  selected: number;
+  game?: string;
+}) {
+  const pokemon = records.get(node.speciesId);
+  const rules = conditionsForGame(node.conditions, game);
   return (
-    <div className="min-h-screen bg-background font-roboto">
-      {/* Header */}
-      <header className="bg-[#1E1E1E] shadow-md py-4 px-4 sm:px-6 md:px-8 sticky top-0 z-10">
-        <div className="container mx-auto flex flex-wrap items-center justify-between">
-          <div className="flex items-center mb-4 sm:mb-0">
-            <svg 
-              className="text-[#FFD700] w-7 h-7 mr-3"
-              viewBox="0 0 20 20" 
-              fill="currentColor"
-            >
-              <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z" />
-              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-              <path fillRule="evenodd" d="M10 7.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM10 11a1 1 0 100-2 1 1 0 000 2z" />
-              <path d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm8-6a6 6 0 100 12 6 6 0 000-12z" fillRule="evenodd" clipRule="evenodd" />
-            </svg>
-            <h1 className="text-2xl font-bold font-[Poppins] text-[#E0E0E0]">PokéDex</h1>
-          </div>
-          
-          <div>
-            <Link href="/">
-              <span className="bg-[#7038F8] text-white px-4 py-2 rounded-full hover:bg-opacity-80 transition duration-200 font-medium cursor-pointer">
-                Back to Pokédex
-              </span>
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 sm:px-6 md:px-8 py-6">
-        <h2 className="text-2xl font-bold font-[Poppins] text-[#E0E0E0] mb-6">Evolution Lines</h2>
-        
-        {/* Pokemon Search & Selection */}
-        <div className="mb-8 space-y-4">
-          <div>
-            <label className="block mb-2 text-[#E0E0E0] font-medium">Search by Name</label>
-            <div className="flex gap-2">
-              <Input
-                placeholder="Search Pokémon by name..."
-                className="bg-[#2E2E2E] border-[#444444] text-[#E0E0E0]"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Button 
-                onClick={() => {
-                  const foundPokemon = allPokemon.find(p => 
-                    p.name.toLowerCase().includes(searchQuery.toLowerCase())
-                  );
-                  if (foundPokemon) {
-                    setSelectedPokemonId(foundPokemon.id.toString());
-                  }
-                }}
-                className="bg-[#7038F8] hover:bg-[#5f2ecc]"
-              >
-                Search
-              </Button>
-            </div>
-            <p className="text-xs text-[#999] mt-1">Example: Search for "Charmander" to see the full Charmander evolution line</p>
-          </div>
-          
-          <div className="mt-6">
-            <label className="block mb-2 text-[#E0E0E0] font-medium">Or Select a Pokémon</label>
-            <Select value={selectedPokemonId} onValueChange={setSelectedPokemonId}>
-              <SelectTrigger className="bg-[#2E2E2E] border-[#444444] text-[#E0E0E0]">
-                <SelectValue placeholder="Select a Pokémon" />
-              </SelectTrigger>
-              <SelectContent className="bg-[#2E2E2E] border-[#444444] text-[#E0E0E0] max-h-[320px]">
-                {sortedPokemon.map(pokemon => (
-                  <SelectItem 
-                    key={pokemon.id} 
-                    value={pokemon.id.toString()}
-                  >
-                    {`#${pokemon.id.toString().padStart(3, '0')} - ${pokemon.name}`}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          
-          {/* Quick examples for popular evolution chains */}
-          <div className="pt-2">
-            <p className="text-sm text-[#BBB] mb-2">Popular Evolution Chains:</p>
-            <div className="flex flex-wrap gap-2">
-              {[
-                { name: "Bulbasaur", id: "1" },
-                { name: "Charmander", id: "4" },
-                { name: "Squirtle", id: "7" },
-                { name: "Pikachu", id: "25" },
-                { name: "Eevee", id: "133" }
-              ].map(pokemon => (
-                <button
-                  key={pokemon.id}
-                  onClick={() => setSelectedPokemonId(pokemon.id)}
-                  className="text-sm px-2 py-1 rounded-full bg-[#333] text-[#E0E0E0] hover:bg-[#444] transition-colors"
-                >
-                  {pokemon.name}
-                </button>
+    <li className="evolution-branch">
+      <div
+        className={`evolution-member ${selected === node.speciesId ? 'selected-member' : ''}`}
+      >
+        {pokemon ? (
+          <Link className="evolution-link" href={`/pokemon/${node.speciesId}`}>
+            <PokemonImage src={pokemon.imageUrl} name={pokemon.name} />
+            <span className="pokemon-id">
+              #{String(node.speciesId).padStart(3, '0')}
+            </span>
+            <h3>{pokemon.name}</h3>
+            <div className="badge-row">
+              {pokemon.types.map((type) => (
+                <TypeBadge key={type} type={type} />
               ))}
             </div>
-          </div>
-        </div>
-        
-        {/* Evolution Chain Display */}
-        {isLoadingEvolution ? (
-          <div className="bg-[#1E1E1E] rounded-lg p-6 text-center">
-            <p className="text-[#E0E0E0]">Loading evolution chain...</p>
-          </div>
-        ) : evolutionChain.length > 0 ? (
-          <div className="bg-[#1E1E1E] rounded-lg p-6">
-            <h3 className="text-xl font-bold text-[#E0E0E0] mb-4">Evolution Line</h3>
-            
-            {/* Improved evolution chain display for better visibility */}
-            <div className="w-full overflow-x-auto py-4">
-              <div className="flex flex-nowrap items-center justify-start min-w-max px-4">
-                {evolutionChain.map((pokemon, index) => (
-                  <div key={pokemon.id} className="flex flex-row items-center">
-                    {/* Pokemon Card with enhanced styles */}
-                    <div className="bg-[#2A2A2A] rounded-lg p-4 shadow-lg border border-[#3A3A3A] transition-all hover:shadow-xl hover:border-[#505050] w-72">
-                      <div className="flex justify-between items-start mb-2">
-                        <h4 className="text-lg font-medium text-white">{pokemon.name}</h4>
-                        <span className="text-[#FFD700] font-mono">#{pokemon.id.toString().padStart(3, '0')}</span>
-                      </div>
-                      
-                      <img 
-                        src={pokemon.imageUrl} 
-                        alt={pokemon.name}
-                        className="w-full h-40 object-contain mb-3 drop-shadow-md" 
-                        loading="lazy"
-                      />
-                      
-                      <div className="flex flex-wrap gap-1.5 mb-3">
-                        {pokemon.types.map(type => (
-                          <span 
-                            key={`${pokemon.id}-${type}`} 
-                            className="px-3 py-1 rounded-md text-sm font-medium text-white text-shadow inline-flex items-center justify-center shadow-sm"
-                            style={{ backgroundColor: typeColors[type as PokemonType] }}
-                          >
-                            {type.charAt(0).toUpperCase() + type.slice(1)}
-                          </span>
-                        ))}
-                      </div>
-                      
-                      {/* Enhanced special tags */}
-                      {(pokemon.isLegendary || pokemon.isMythical || pokemon.isBaby) && (
-                        <div className="flex gap-2 flex-wrap mt-2">
-                          {pokemon.isLegendary && (
-                            <span className="px-2 py-1 bg-gradient-to-r from-yellow-600 to-yellow-500 text-white text-xs rounded-full font-medium shadow-sm">
-                              Legendary
-                            </span>
-                          )}
-                          {pokemon.isMythical && (
-                            <span className="px-2 py-1 bg-gradient-to-r from-pink-600 to-pink-500 text-white text-xs rounded-full font-medium shadow-sm">
-                              Mythical
-                            </span>
-                          )}
-                          {pokemon.isBaby && (
-                            <span className="px-2 py-1 bg-gradient-to-r from-blue-500 to-blue-400 text-white text-xs rounded-full font-medium shadow-sm">
-                              Baby
-                            </span>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                    
-                    {/* Arrow to next evolution with animated gradient */}
-                    {index < evolutionChain.length - 1 && (
-                      <div className="mx-4 text-white">
-                        <div className="relative w-16 h-16 flex items-center justify-center bg-gradient-to-r from-[#3A3A3A] to-[#2A2A2A] rounded-full shadow-md">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                          </svg>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Horizontal scrolling hint */}
-            {evolutionChain.length > 2 && (
-              <div className="mt-3 text-center text-[#A0A0A0] text-sm">
-                <p>Swipe or scroll horizontally to see the full evolution chain</p>
-              </div>
-            )}
-          </div>
-        ) : selectedPokemonId ? (
-          <div className="bg-[#1E1E1E] rounded-lg p-6 text-center">
-            <p className="text-[#E0E0E0]">Evolution data not available for this Pokémon</p>
-          </div>
+          </Link>
         ) : (
-          <div className="bg-[#1E1E1E] rounded-lg p-6 text-center">
-            <p className="text-[#E0E0E0]">Select a Pokémon to see its evolution line</p>
-          </div>
+          <>
+            <h3>{node.name}</h3>
+            <p className="muted">Details unavailable in this snapshot.</p>
+          </>
         )}
-      </main>
-      
-      {/* Footer */}
-      <Footer />
-    </div>
+        {node.conditions.length > 0 && (
+          <details className="evolution-conditions">
+            <summary>
+              Evolution conditions
+              {rules.conditions.length > 1
+                ? ` (${rules.conditions.length} alternatives)`
+                : ''}
+            </summary>
+            <span className="muted">Evolves from its parent with</span>
+            {game && !rules.specific && (
+              <p className="muted">
+                No rules specific to {displayName(game)} are saved for this
+                edge; showing all source alternatives.
+              </p>
+            )}
+            {rules.conditions.map((conditions, i) => (
+              <p key={i}>
+                {i > 0 && <strong>OR </strong>}
+                {conditions.length
+                  ? conditions.join(' · ')
+                  : 'Conditions unavailable'}
+              </p>
+            ))}
+          </details>
+        )}
+      </div>
+      {node.children.length > 0 && (
+        <ul
+          aria-label={`Evolutions of ${node.name}`}
+          className="evolution-children"
+        >
+          {node.children.map((child) => (
+            <Branch
+              key={child.speciesId}
+              node={child}
+              records={records}
+              selected={selected}
+              game={game}
+            />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
+export default function Evolution() {
+  const catalogue = useCatalogue(),
+    [params, setParams] = useUrlState(),
+    selectedId = params.get('pokemon') ?? '';
+  const records = catalogue.data?.pokemon ?? [],
+    selected = records.find((p) => String(p.speciesId) === selectedId);
+  const family = useEvolution(
+    catalogue.data?.manifest,
+    selected?.evolutionChainId,
+  );
+  return (
+    <AppShell>
+      <div className="page-heading">
+        <div>
+          <h1>Evolution families</h1>
+          <p className="muted">
+            Follow each branch from its first stage. Siblings are separate
+            evolutions.
+          </p>
+        </div>
+      </div>
+      <RequestState
+        loading={catalogue.isPending}
+        error={catalogue.isError}
+        retry={() => void catalogue.refetch()}
+      />
+      <div className="evolution-selector">
+        <PokemonSelector
+          label="Pokémon"
+          records={records}
+          value={selectedId}
+          onChange={(pokemon) => setParams({ pokemon })}
+          disabled={!catalogue.isSuccess}
+        />
+      </div>
+      <div className="example-families">
+        <span className="muted">Try a family:</span>
+        {[
+          [1, 'Bulbasaur'],
+          [172, 'Pichu'],
+          [133, 'Eevee'],
+        ].map(([id, name]) => (
+          <button
+            key={id}
+            className="action secondary"
+            disabled={!catalogue.isSuccess}
+            onClick={() => setParams({ pokemon: String(id) })}
+          >
+            {name}
+          </button>
+        ))}
+      </div>
+      {!selectedId && catalogue.isSuccess && (
+        <p className="request-state">
+          Choose a Pokémon to explore its evolution family.
+        </p>
+      )}
+      {selectedId && !selected && catalogue.isSuccess && (
+        <p role="status">
+          This Pokémon is not included in the saved catalogue.
+        </p>
+      )}
+      {selected && !selected.evolutionChainId && (
+        <p role="status">Evolution data is unavailable for this Pokémon.</p>
+      )}
+      {selected?.evolutionChainId && family.isPending && (
+        <p role="status">Loading the evolution family…</p>
+      )}
+      {selected && family.isError && (
+        <div role="alert" className="request-state">
+          <p>This evolution family could not be loaded.</p>
+          <button className="action" onClick={() => void family.refetch()}>
+            Retry family
+          </button>
+        </div>
+      )}
+      {selected && family.data && (
+        <section className="family-section">
+          <h2>{family.data.name} family</h2>
+          <p className="muted">
+            Conditions are supplied by PokéAPI across games; requirements can
+            differ by game version.
+            {params.get('game') &&
+              ` Selected rules context: ${displayName(params.get('game')!)}. The canonical family includes species from multiple generations; this does not establish availability in the selected game.`}
+          </p>
+          {family.data.children.length === 0 && (
+            <p>This is a single stage family with no further evolutions.</p>
+          )}
+          <ul className="evolution-tree">
+            <Branch
+              node={family.data}
+              records={new Map(records.map((p) => [p.speciesId, p]))}
+              selected={selected.speciesId}
+              game={params.get('game') ?? undefined}
+            />
+          </ul>
+        </section>
+      )}
+    </AppShell>
   );
 }

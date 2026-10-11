@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-10-11T19:04:31.748Z",
+  "browserVersion": "156.0.8078.4",
+  "runtime": {
+    "node": "v22.13.1",
+    "platform": "win32",
+    "architecture": "x64"
+  },
+  "probeOnly": true,
+  "profile": null,
+  "methodology": "Unthrottled, fresh-context offline installation probe. Counts browser catalogue fetches and actual preview-server GET requests; cached fetches need not reach the server. No core timings or payload/card budgets are measured in this mode.",
+  "summary": null,
+  "offlineInstallProbe": {
+    "catalogueRequests": [
+      {
+        "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+        "worker": false
+      },
+      {
+        "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+        "worker": true
+      }
+    ],
+    "catalogueHttpRequests": 2
+  },
+  "runs": [],
+  "budgets": {
+    "coldApplicationBytes": 286720,
+    "mountedCards": 40,
+    "catalogueHttpRequests": 1
+  },
+  "budgetChecks": {
+    "coldApplicationBytes": null,
+    "mountedCards": null,
+    "catalogueHttpRequests": false
+  }
+}

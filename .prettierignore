@@ -1,0 +1,9 @@
+node_modules
+dist
+tmp
+client/public/data
+client/src/components/ui
+client/src/hooks
+package-lock.json
+docs/*.pdf
+docs/*.docx

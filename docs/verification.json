@@ -1,0 +1,22 @@
+{
+  "date": "12 October 2026",
+  "unitTests": 23,
+  "browserTests": 19,
+  "auditVulnerabilities": 0,
+  "featuresThrough": "F06",
+  "performanceBaseline": "docs/performance-baseline.json",
+  "latestValidation": {
+    "date": "12 October 2026",
+    "typecheck": "passed",
+    "lint": "passed",
+    "format": "passed including documentation",
+    "productionBuild": "passed through browser test setup",
+    "unitAndApi": "23 passed",
+    "browser": "19 passed in Chromium",
+    "performanceBudgets": "passed; fresh check report stays in ignored tmp/review",
+    "audit": "0 vulnerabilities",
+    "planDocuments": "Word and PDF refreshed; 16 rendered pages inspected",
+    "remoteCi": "Not yet verified for the session commit"
+  },
+  "handoff": "docs/next-session.md"
+}

@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "version": "bd235acbb4d65e7e",
+  "generatedAt": "2026-10-11T18:21:10.424Z",
+  "speciesCount": 1025,
+  "games": [
+    {
+      "id": 1,
+      "slug": "red-blue",
+      "versions": [
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "yellow",
+      "versions": [
+        "yellow"
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "gold-silver",
+      "versions": [
+        "gold",
+        "silver"
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "crystal",
+      "versions": [
+        "crystal"
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "ruby-sapphire",
+      "versions": [
+        "ruby",
+        "sapphire"
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "emerald",
+      "versions": [
+        "emerald"
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "firered-leafgreen",
+      "versions": [
+        "firered",
+        "leafgreen"
+      ]
+    },
+    {
+      "id": 8,
+      "slug": "diamond-pearl",
+      "versions": [
+        "diamond",
+        "pearl"
+      ]
+    },
+    {
+      "id": 9,
+      "slug": "platinum",
+      "versions": [
+        "platinum"
+      ]
+    },
+    {
+      "id": 10,
+      "slug": "heartgold-soulsilver",
+      "versions": [
+        "heartgold",
+        "soulsilver"
+      ]
+    },
+    {
+      "id": 11,
+      "slug": "black-white",
+      "versions": [
+        "black",
+        "white"
+      ]
+    },
+    {
+      "id": 12,
+      "slug": "colosseum",
+      "versions": [
+        "colosseum"
+      ]
+    },
+    {
+      "id": 13,
+      "slug": "xd",
+      "versions": [
+        "xd"
+      ]
+    },
+    {
+      "id": 14,
+      "slug": "black-2-white-2",
+      "versions": [
+        "black-2",
+        "white-2"
+      ]
+    },
+    {
+      "id": 15,
+      "slug": "x-y",
+      "versions": [
+        "x",
+        "y"
+      ]
+    },
+    {
+      "id": 16,
+      "slug": "omega-ruby-alpha-sapphire",
+      "versions": [
+        "omega-ruby",
+        "alpha-sapphire"
+      ]
+    },
+    {
+      "id": 17,
+      "slug": "sun-moon",
+      "versions": [
+        "sun",
+        "moon"
+      ]
+    },
+    {
+      "id": 18,
+      "slug": "ultra-sun-ultra-moon",
+      "versions": [
+        "ultra-sun",
+        "ultra-moon"
+      ]
+    },
+    {
+      "id": 19,
+      "slug": "lets-go-pikachu-lets-go-eevee",
+      "versions": [
+        "lets-go-pikachu",
+        "lets-go-eevee"
+      ]
+    },
+    {
+      "id": 20,
+      "slug": "sword-shield",
+      "versions": [
+        "sword",
+        "shield"
+      ]
+    },
+    {
+      "id": 21,
+      "slug": "the-isle-of-armor",
+      "versions": [
+        "the-isle-of-armor-sword",
+        "the-isle-of-armor-shield"
+      ]
+    },
+    {
+      "id": 22,
+      "slug": "the-crown-tundra",
+      "versions": [
+        "the-crown-tundra-sword",
+        "the-crown-tundra-shield"
+      ]
+    },
+    {
+      "id": 23,
+      "slug": "brilliant-diamond-shining-pearl",
+      "versions": [
+        "brilliant-diamond",
+        "shining-pearl"
+      ]
+    },
+    {
+      "id": 24,
+      "slug": "legends-arceus",
+      "versions": [
+        "legends-arceus"
+      ]
+    },
+    {
+      "id": 25,
+      "slug": "scarlet-violet",
+      "versions": [
+        "scarlet",
+        "violet"
+      ]
+    },
+    {
+      "id": 26,
+      "slug": "the-teal-mask",
+      "versions": [
+        "the-teal-mask-scarlet",
+        "the-teal-mask-violet"
+      ]
+    },
+    {
+      "id": 27,
+      "slug": "the-indigo-disk",
+      "versions": [
+        "the-indigo-disk-scarlet",
+        "the-indigo-disk-violet"
+      ]
+    },
+    {
+      "id": 28,
+      "slug": "red-green-japan",
+      "versions": [
+        "red-japan",
+        "green-japan"
+      ]
+    },
+    {
+      "id": 29,
+      "slug": "blue-japan",
+      "versions": [
+        "blue-japan"
+      ]
+    },
+    {
+      "id": 30,
+      "slug": "legends-za",
+      "versions": [
+        "legends-za"
+      ]
+    },
+    {
+      "id": 31,
+      "slug": "mega-dimension",
+      "versions": [
+        "mega-dimension"
+      ]
+    },
+    {
+      "id": 32,
+      "slug": "champions",
+      "versions": [
+        "champions"
+      ]
+    }
+  ]
+}

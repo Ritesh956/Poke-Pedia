@@ -4,3 +4,11 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+.cache/
+tmp/
+playwright-report/
+test-results/
+.env
+client/public/data/.staging-*/
+client/public/data/forms/.staging-*/
+client/public/data/reference/.staging-*/

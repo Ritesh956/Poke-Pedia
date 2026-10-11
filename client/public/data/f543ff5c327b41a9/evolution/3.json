@@ -1,0 +1,1 @@
+{"speciesId":7,"name":"Squirtle","conditions":[],"children":[{"speciesId":8,"name":"Wartortle","conditions":[["Games: Red Blue","Level Up","Level 16 or higher"]],"children":[{"speciesId":9,"name":"Blastoise","conditions":[["Games: Red Blue","Level Up","Level 36 or higher"]],"children":[]}]}]}

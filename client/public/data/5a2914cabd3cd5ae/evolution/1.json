@@ -1,0 +1,1 @@
+{"speciesId":1,"name":"Bulbasaur","conditions":[],"children":[{"speciesId":2,"name":"Ivysaur","conditions":[["Games: Red Blue","Level Up","Level 16 or higher"]],"children":[{"speciesId":3,"name":"Venusaur","conditions":[["Games: Red Blue","Level Up","Level 32 or higher"]],"children":[]}]}]}

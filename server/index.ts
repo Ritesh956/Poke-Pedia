@@ -1,66 +1,41 @@
-import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
-
+import express from 'express';
+import { handleError } from './errors';
+import { registerRoutes } from './routes';
+import { setupVite, serveStatic, log } from './vite';
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
+app.disable('x-powered-by');
+app.use(express.json({ limit: '64kb' }));
 app.use((req, res, next) => {
-  const start = Date.now();
-  const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
-
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
-
-  res.on("finish", () => {
-    const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
-
-      log(logLine);
-    }
+  const started = Date.now();
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.on('finish', () => {
+    if (req.path.startsWith('/api'))
+      log(
+        `${req.method} ${req.path} ${res.statusCode} ${Date.now() - started}ms`,
+      );
   });
-
   next();
 });
-
-(async () => {
+async function start() {
   const server = await registerRoutes(app);
-
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-    throw err;
+  if (app.get('env') === 'development') await setupVite(app, server);
+  else serveStatic(app);
+  app.use(handleError);
+  const port = Number(process.env.PORT ?? 5000);
+  if (!Number.isInteger(port) || port < 1 || port > 65535)
+    throw new Error('PORT must be between 1 and 65535');
+  server.on('error', (error) => {
+    console.error('Server failed:', error);
+    process.exitCode = 1;
   });
-
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
-
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
-server.listen(port, () => {
-  log(`serving on port ${port}`);
+  server.listen(port, process.env.HOST ?? '127.0.0.1', () =>
+    log(`serving on port ${port}`),
+  );
+}
+start().catch((error) => {
+  console.error(
+    'Startup failed. Run npm run data:sync if the snapshot is missing.',
+    error,
+  );
+  process.exitCode = 1;
 });
-})();

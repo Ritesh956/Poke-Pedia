@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
 
 interface LoadMoreButtonProps {
@@ -7,30 +6,28 @@ interface LoadMoreButtonProps {
   hasMore: boolean;
 }
 
-export function LoadMoreButton({ onClick, isLoading, hasMore }: LoadMoreButtonProps) {
-  const [isPressed, setIsPressed] = useState(false);
-  
+export function LoadMoreButton({
+  onClick,
+  isLoading,
+  hasMore,
+}: LoadMoreButtonProps) {
   const handleClick = async () => {
     if (isLoading || !hasMore) return;
-    
-    setIsPressed(true);
+
     await onClick();
-    setIsPressed(false);
   };
-  
+
   if (!hasMore) return null;
-  
+
   return (
     <div className="mt-8 text-center">
-      <button 
+      <button
         className="bg-[#7038F8] text-white px-6 py-2 rounded-full hover:bg-opacity-80 transition duration-200 font-medium flex items-center justify-center"
         onClick={handleClick}
         disabled={isLoading}
       >
-        {isLoading ? (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        ) : null}
-        {isLoading ? "Loading..." : "Load More Pokémon"}
+        {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+        {isLoading ? 'Loading...' : 'Load More Pokémon'}
       </button>
     </div>
   );

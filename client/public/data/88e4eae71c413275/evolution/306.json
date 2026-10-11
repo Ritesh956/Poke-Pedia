@@ -1,0 +1,1 @@
+{"speciesId":602,"name":"Tynamo","conditions":[],"children":[{"speciesId":603,"name":"Eelektrik","conditions":[["Version Group: Black White","Is Default: Yes","Level Up","Min Level: 39"]],"children":[{"speciesId":604,"name":"Eelektross","conditions":[["Version Group: Black White","Is Default: Yes","Item: Thunder Stone","Use Item"]],"children":[]}]}]}

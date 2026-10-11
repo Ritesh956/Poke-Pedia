@@ -1,0 +1,1 @@
+{"speciesId":1,"name":"Bulbasaur","conditions":[],"children":[{"speciesId":2,"name":"Ivysaur","conditions":[["Version Group: Red Blue","Is Default: Yes","Level Up","Min Level: 16"]],"children":[{"speciesId":3,"name":"Venusaur","conditions":[["Version Group: Red Blue","Is Default: Yes","Level Up","Min Level: 32"]],"children":[]}]}]}

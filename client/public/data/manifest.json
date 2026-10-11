@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "version": "f543ff5c327b41a9",
+  "generatedAt": "2026-10-11T12:02:54.701Z",
+  "expectedCount": 1025,
+  "recordCount": 1025,
+  "missingIds": [],
+  "generations": [
+    "generation-i",
+    "generation-ii",
+    "generation-iii",
+    "generation-iv",
+    "generation-v",
+    "generation-vi",
+    "generation-vii",
+    "generation-viii",
+    "generation-ix"
+  ],
+  "scope": "default varieties"
+}

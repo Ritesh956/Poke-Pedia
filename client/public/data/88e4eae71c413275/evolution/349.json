@@ -1,0 +1,1 @@
+{"speciesId":679,"name":"Honedge","conditions":[],"children":[{"speciesId":680,"name":"Doublade","conditions":[["Version Group: X Y","Is Default: Yes","Level Up","Min Level: 35"]],"children":[{"speciesId":681,"name":"Aegislash","conditions":[["Version Group: X Y","Is Default: Yes","Item: Dusk Stone","Use Item"]],"children":[]}]}]}

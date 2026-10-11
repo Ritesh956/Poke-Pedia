@@ -1,0 +1,1 @@
+{"speciesId":4,"name":"Charmander","conditions":[],"children":[{"speciesId":5,"name":"Charmeleon","conditions":[["Version Group: Red Blue","Is Default: Yes","Level Up","Min Level: 16"]],"children":[{"speciesId":6,"name":"Charizard","conditions":[["Version Group: Red Blue","Is Default: Yes","Level Up","Min Level: 36"]],"children":[]}]}]}

@@ -1,5 +1,5 @@
-modules = ["nodejs-20", "web", "postgresql-16"]
-run = "npm run dev"
+modules = ["nodejs-22", "web"]
+run = "npx cross-env HOST=0.0.0.0 npm run dev:server"
 hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 
 [nix]
@@ -7,8 +7,8 @@ channel = "stable-24_05"
 
 [deployment]
 deploymentTarget = "autoscale"
-build = ["npm", "run", "build"]
-run = ["npm", "run", "start"]
+build = ["npm", "run", "build:server"]
+run = ["npx", "cross-env", "HOST=0.0.0.0", "npm", "run", "start"]
 
 [[ports]]
 localPort = 5000
@@ -38,5 +38,5 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run dev"
+args = "npx cross-env HOST=0.0.0.0 npm run dev:server"
 waitForPort = 5000

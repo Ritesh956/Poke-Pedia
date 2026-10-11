@@ -1,136 +1,199 @@
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Link } from 'wouter';
-import { Pokemon as BasePokemon, PokemonType } from '@shared/schema';
+import { useCallback, useState } from 'react';
+import { pokemonTypes, type PokemonType } from '@shared/schema';
+import { filterPokemon, type Filters } from '@shared/pokemon';
+import { useCatalogue } from '@/lib/pokemonData';
+import { useUrlState } from '@/lib/urlState';
+import { AppShell, RequestState } from '@/components/AppShell';
 import { SearchBar } from '@/components/SearchBar';
 import { FilterBar } from '@/components/FilterBar';
 import { PokemonGrid } from '@/components/PokemonGrid';
-import { Footer } from '@/components/Footer';
-
-// Extended Pokemon interface to handle optional special properties
-interface Pokemon extends BasePokemon {
-  isLegendary: boolean;
-  isMythical: boolean;
-  isBaby: boolean;
-}
-
+import { ViewToggle } from '@/components/ViewToggle';
+import { CollectionTools } from '@/components/CollectionTools';
+import { useCollection } from '@/lib/collection';
 export default function Home() {
-  // State for filtering and display
-  const [activeType, setActiveType] = useState<PokemonType | 'all'>('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [layout, setLayout] = useState<'grid' | 'box' | 'list'>('grid');
-  const [showLegendary, setShowLegendary] = useState(false);
-  const [showMythical, setShowMythical] = useState(false);
-  const [showBaby, setShowBaby] = useState(false);
-  
-  // Fetch all Pokemon data
-  const { data: allPokemon = [], isLoading } = useQuery<Pokemon[]>({
-    queryKey: ['/api/pokemon'],
-  });
-  
-  // Filter Pokemon based on type, search query, and special categories
-  const filteredPokemon = allPokemon.filter(pokemon => {
-    // Type filter
-    const matchesType = activeType === 'all' || pokemon.types.includes(activeType);
-    
-    // Search filter (case insensitive)
-    const matchesSearch = pokemon.name.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    // Special category filters
-    let matchesSpecialCategories = true;
-    
-    // If any special category filter is active
-    if (showLegendary || showMythical || showBaby) {
-      matchesSpecialCategories = (
-        (showLegendary && pokemon.isLegendary === true) ||
-        (showMythical && pokemon.isMythical === true) ||
-        (showBaby && pokemon.isBaby === true)
-      );
-    }
-    
-    return matchesType && matchesSearch && matchesSpecialCategories;
-  });
-  
-  // Sort Pokemon by ID
-  const sortedPokemon = [...filteredPokemon].sort((a, b) => a.id - b.id);
-  
+  const query = useCatalogue();
+  const { collection } = useCollection();
+  const [params, setParams] = useUrlState();
+  const [page, setPage] = useState({ key: '', count: 40 });
+  const filters: Filters = {
+    query: params.get('q') ?? '',
+    type: pokemonTypes.includes(params.get('type') as PokemonType)
+      ? (params.get('type') as PokemonType)
+      : 'all',
+    legendary: params.get('legendary') === '1',
+    mythical: params.get('mythical') === '1',
+    baby: params.get('baby') === '1',
+    sort: ['name', 'height', 'weight'].includes(params.get('sort') ?? '')
+      ? (params.get('sort') as Filters['sort'])
+      : 'id',
+  };
+  const layout = ['box', 'list'].includes(params.get('layout') ?? '')
+    ? (params.get('layout') as 'box' | 'list')
+    : 'grid';
+  const change = useCallback(
+    (values: Record<string, string | null>) => setParams(values),
+    [setParams],
+  );
+  const search = useCallback(
+    (q: string) => setParams({ q }, true),
+    [setParams],
+  );
+  const reset = () =>
+    setParams({
+      q: null,
+      type: null,
+      legendary: null,
+      mythical: null,
+      baby: null,
+      sort: null,
+      layout: null,
+      collection: null,
+    });
+  const collectionFilter = ['favorites', 'caught'].includes(
+    params.get('collection') ?? '',
+  )
+    ? (params.get('collection') as 'favorites' | 'caught')
+    : 'all';
+  const records = filterPokemon(query.data?.pokemon ?? [], filters).filter(
+      (p) =>
+        collectionFilter === 'all' ||
+        collection[collectionFilter].includes(p.speciesId),
+    ),
+    key = JSON.stringify([filters, collectionFilter]),
+    visible = page.key === key ? page.count : 40;
+  const hasFilters =
+    filters.query ||
+    filters.type !== 'all' ||
+    filters.legendary ||
+    filters.mythical ||
+    filters.baby ||
+    collectionFilter !== 'all';
   return (
-    <div className="min-h-screen bg-background font-roboto">
-      {/* Header */}
-      <header className="bg-[#1E1E1E] shadow-md py-4 px-4 sm:px-6 md:px-8 sticky top-0 z-10">
-        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
-          <div className="flex items-center mb-4 sm:mb-0">
-            <svg 
-              className="text-[#FFD700] w-7 h-7 mr-3"
-              viewBox="0 0 20 20" 
-              fill="currentColor"
-            >
-              <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z" />
-              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-              <path fillRule="evenodd" d="M10 7.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM10 11a1 1 0 100-2 1 1 0 000 2z" />
-              <path d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm8-6a6 6 0 100 12 6 6 0 000-12z" fillRule="evenodd" clipRule="evenodd" />
-            </svg>
-            <h1 className="text-2xl font-bold font-[Poppins] text-[#E0E0E0]">PokéDex</h1>
-          </div>
-          
-          {/* Navigation Links */}
-          <div className="flex items-center space-x-4 mb-4 sm:mb-0">
-            <Link href="/compare">
-              <span className="bg-[#7038F8] text-white px-3 py-1 rounded-full hover:bg-opacity-80 transition duration-200 text-sm font-medium cursor-pointer">
-                Compare
-              </span>
-            </Link>
-            <Link href="/evolution">
-              <span className="bg-[#78C850] text-white px-3 py-1 rounded-full hover:bg-opacity-80 transition duration-200 text-sm font-medium cursor-pointer">
-                Evolution
-              </span>
-            </Link>
-          </div>
-          
-          {/* Search Box */}
-          <SearchBar onSearch={setSearchQuery} />
+    <AppShell>
+      <div className="page-heading">
+        <div>
+          <h1>Explore the Pokédex</h1>
+          <p className="muted">
+            Find a Pokémon, compare its stats, and discover its evolution
+            family.
+          </p>
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 sm:px-6 md:px-8 py-6">
-        {/* Filter Bar */}
-        <FilterBar 
-          activeType={activeType} 
-          setActiveType={setActiveType}
-          pokemonCount={filteredPokemon.length}
-          layout={layout}
-          setLayout={setLayout}
-          showLegendary={showLegendary}
-          setShowLegendary={setShowLegendary}
-          showMythical={showMythical}
-          setShowMythical={setShowMythical}
-          showBaby={showBaby}
-          setShowBaby={setShowBaby}
-        />
-        
-        {/* Pokemon Grid - Show All Pokemon at once */}
-        <PokemonGrid 
-          pokemons={sortedPokemon} 
-          isLoading={isLoading} 
-          layout={layout} 
-        />
-        
-        {/* Back to top button for performance */}
-        {!isLoading && sortedPokemon.length > 50 && (
-          <div className="mt-8 text-center">
-            <button 
-              className="bg-[#7038F8] text-white px-6 py-2 rounded-full hover:bg-opacity-80 transition duration-200 font-medium"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      </div>
+      <SearchBar value={filters.query} onSearch={search} />
+      <FilterBar filters={filters} change={change} />
+      <div
+        className="collection-filter"
+        role="group"
+        aria-label="Collection view"
+      >
+        {(['all', 'favorites', 'caught'] as const).map((view) => (
+          <button
+            key={view}
+            className="action secondary"
+            aria-pressed={collectionFilter === view}
+            onClick={() => change({ collection: view === 'all' ? null : view })}
+          >
+            {view === 'all'
+              ? 'All Pokémon'
+              : view === 'favorites'
+                ? 'Favorites'
+                : 'Caught'}
+          </button>
+        ))}
+      </div>
+      <div className="catalogue-toolbar">
+        <div className="toolbar-controls">
+          <ViewToggle
+            layout={layout}
+            setLayout={(layout) => change({ layout })}
+          />
+          <label className="sort-label">
+            Sort
+            <select
+              value={filters.sort}
+              onChange={(e) => change({ sort: e.target.value })}
             >
-              Back to Top
+              <option value="id">Pokédex number</option>
+              <option value="name">Name</option>
+              <option value="height">Height</option>
+              <option value="weight">Weight</option>
+            </select>
+          </label>
+        </div>
+        <p role="status">
+          {query.isPending
+            ? 'Loading Pokémon…'
+            : query.isError
+              ? 'Catalogue unavailable'
+              : `${records.length} Pokémon`}
+          {hasFilters && (
+            <button className="text-action" onClick={reset}>
+              Clear all filters
             </button>
-          </div>
-        )}
-      </main>
-      
-      {/* Footer */}
-      <Footer />
-    </div>
+          )}
+        </p>
+      </div>
+      {hasFilters && (
+        <p className="active-filters muted">
+          Active:{' '}
+          {[
+            filters.query && `Search “${filters.query}”`,
+            filters.type !== 'all' && filters.type,
+            filters.legendary && 'Legendary',
+            filters.mythical && 'Mythical',
+            filters.baby && 'Baby',
+            collectionFilter !== 'all' && collectionFilter,
+          ]
+            .filter(Boolean)
+            .join(' · ')}
+        </p>
+      )}
+      <RequestState
+        loading={false}
+        error={query.isError}
+        retry={() => void query.refetch()}
+      />
+      {query.data?.manifest.missingIds.length ? (
+        <p role="status">
+          This snapshot includes {query.data.manifest.recordCount} of{' '}
+          {query.data.manifest.expectedCount} species. Some entries are
+          unavailable.
+        </p>
+      ) : null}
+      {!query.isError && (
+        <PokemonGrid
+          pokemons={records.slice(0, visible)}
+          isLoading={query.isPending}
+          layout={layout}
+        />
+      )}
+      {!query.isPending && !query.isError && records.length === 0 && (
+        <button className="action" onClick={reset}>
+          Clear all filters
+        </button>
+      )}
+      {records.length > visible && (
+        <div className="load-more">
+          <p className="muted">
+            Showing {visible} of {records.length}
+          </p>
+          <button
+            className="action"
+            onClick={() => setPage({ key, count: visible + 40 })}
+          >
+            Load 40 more
+          </button>
+        </div>
+      )}
+      {query.data && (
+        <p className="snapshot-note muted">
+          {query.data.manifest.recordCount} species · Default varieties ·
+          Updated{' '}
+          {new Date(query.data.manifest.generatedAt).toLocaleDateString()} ·
+          Snapshot {query.data.manifest.version.slice(0, 8)}
+        </p>
+      )}
+      <CollectionTools />
+    </AppShell>
   );
 }

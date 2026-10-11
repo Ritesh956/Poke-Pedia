@@ -1,0 +1,112 @@
+[
+  {
+    "step": "Core release improvements R01 to R24",
+    "date": "11 October 2026",
+    "status": "Complete",
+    "done": [
+      "Validated static catalogue with 1025 species and 540 evolution families replaced request-time imports.",
+      "Accessible details, correct evolution branches, search and URL filters, comparison, bounded rendering, explicit audio, image fallbacks and mobile layouts.",
+      "Setup and deployment documentation, lint, formatting, CI, and unit and browser checks."
+    ],
+    "validation": "Initial milestone passed 8 unit and API tests plus 7 browser scenarios.",
+    "remaining": "Public deployment and physical-device checks remained outside this local implementation."
+  },
+  {
+    "step": "Favorites and caught tracking F01",
+    "date": "11 October 2026",
+    "status": "Complete",
+    "done": [
+      "Independent favorites and caught controls, local persistence, and filtered views.",
+      "Validated JSON import with merge or replace, export, and feedback for blocked or full storage.",
+      "Tailwind 4 migration removed the remaining CSS dependency advisories."
+    ],
+    "validation": "11 unit and API tests and 10 browser scenarios passed. Dependency audit reported zero vulnerabilities.",
+    "remaining": "Choices stay in this browser and do not synchronize between devices."
+  },
+  {
+    "step": "Team building F02",
+    "date": "11 October 2026",
+    "status": "Complete",
+    "done": [
+      "Six searchable ordered slots, duplicate and empty selections, URL sharing, and validated team JSON import and export.",
+      "Defensive coverage combines dual types, preserves immunities, and counts weaknesses and resistances.",
+      "Saved standard type chart with atomic refresh and local upstream cache."
+    ],
+    "validation": "16 unit and API tests and 13 browser scenarios passed. Dependency audit remained clear.",
+    "remaining": "Coverage excludes abilities, items, moves and Terastallization; no battle outcomes are promised."
+  },
+  {
+    "step": "Shiny artwork and varieties F03",
+    "date": "11 October 2026",
+    "status": "Complete",
+    "done": [
+      "1351 cached varieties across 1025 species, each retaining matching types, abilities, stats, cries and artwork.",
+      "Details support URL-based variety selection and shiny artwork with safe regular-artwork fallback.",
+      "Species counts and collection identity remain separate from form resource IDs."
+    ],
+    "validation": "Validated 1351 varieties. Unit checks verify species identity, form types, stats and media; browser checks verify URL persistence and shiny fallback.",
+    "remaining": "Cosmetic variants outside PokéAPI species varieties are not included."
+  },
+  {
+    "step": "Offline catalogue F04",
+    "date": "11 October 2026",
+    "status": "Complete",
+    "done": [
+      "Production builds generate a versioned service worker and application manifest.",
+      "Core files and catalogue are precached; visited data is limited to 40 entries and eligible artwork to 32 images up to 1 MB each.",
+      "Explicit reload-to-update flow retains the preceding cache version; offline status explains uncached content."
+    ],
+    "validation": "Offline reload and explicit worker-update scenarios passed, including visited families/varieties, teams, quiz, uncached content and cache limits.",
+    "remaining": "Requires a production build on HTTPS or localhost and a successful online installation."
+  },
+  {
+    "step": "Random discovery and type quiz F05",
+    "date": "11 October 2026",
+    "status": "Complete",
+    "done": [
+      "Random discovery selects a real entry from the saved catalogue.",
+      "The accessible type quiz offers four distinct choices with exactly one matching type set, keyboard controls, answer feedback and local best streak.",
+      "The quiz remains usable without artwork and guards against repeated answers."
+    ],
+    "validation": "Question uniqueness and random-boundary tests and keyboard/image-independent browser checks passed. Cumulative suite: 19 unit/API tests and 17 browser scenarios.",
+    "remaining": "The quiz uses default varieties and English names; the current streak resets on reload."
+  },
+  {
+    "step": "Localized names and game reference F06",
+    "date": "11 October 2026",
+    "status": "Complete within focused scope",
+    "done": [
+      "Saved references cover 1025 species, all saved varieties and 32 game groups with English, Japanese, French and Spanish species names and descriptions.",
+      "Details preserve language, game and variety choices in URLs, identify description fallbacks, and show game-specific move learning and encounter conditions.",
+      "Evolution edges filter source-tagged rules by game and explicitly retain general alternatives when specific data is missing. Visited references work offline."
+    ],
+    "validation": "Four new unit tests and two browser scenarios passed; offline localization was verified. The cumulative suite has 23 unit/API tests and 19 browser scenarios.",
+    "remaining": "Interface labels, form modifiers, moves and locations remain in English. Current types and stats are not rewritten for historical games. Missing data does not establish game availability. Broader translation, deployment and physical-device checks remain."
+  },
+  {
+    "step": "Throttled performance baseline and offline preparation",
+    "date": "12 October 2026",
+    "status": "Complete within lab scope",
+    "done": [
+      "Added repeatable cold/warm Chromium core loading and search measurements with a constrained mobile profile and retained every sample.",
+      "Deferred offline registration until catalogue data is rendered and reused HTTP cache for immutable files. The controlled reload/current-policy comparison reduced catalogue HTTP requests from 2 to 1.",
+      "Added CI guardrails for transfer size, initial card count and catalogue HTTP requests. The benchmark report distinguishes lab timings from field/device measurements."
+    ],
+    "validation": "All 23 unit/API tests and 19 browser scenarios pass. Deterministic performance checks pass. Current lab medians: 4.45 seconds cold results, 1.89 seconds warm results, about 0.37 seconds search including debounce. Dependency audit reports zero vulnerabilities.",
+    "remaining": "Core timings use Vite preview with gzip; media hosts and workers are excluded, and the installation comparison is unthrottled. Actual-host compression, full media/field/device profiling and a smaller-index evaluation remain. No deployment was performed.",
+    "startNewPage": true
+  },
+  {
+    "step": "Documentation reconciliation and next session handoff",
+    "date": "12 October 2026",
+    "status": "Complete",
+    "done": [
+      "Corrected historical test counts, current bundle size and the completed performance baseline in the progress record; clarified the repository deployment base in README.",
+      "Added a next-session handoff with completed scope, published data versions, verification commands, remaining priorities and refresh/document maintenance instructions. Linked it from README and AGENTS.md.",
+      "Extended formatting checks to the handoff and supporting Markdown/JSON documents. Ignored temporary QA files while preserving them locally."
+    ],
+    "validation": "Published data identities and repository destination checked. Fresh type checking, lint, formatting, production build, all 23 unit/API tests and 19 browser scenarios pass. Deterministic performance budgets pass; npm audit reports zero vulnerabilities. Both cumulative plan files were regenerated, all 16 rendered pages inspected and page numbering checked.",
+    "remaining": "Remote CI has not run for this commit yet. Compact-index evaluation, broader translation, full-media/field profiling, physical-device/browser/accessibility validation and authorized public hosting remain. Commit and push are requested separately from website deployment.",
+    "startNewPage": true
+  }
+]
