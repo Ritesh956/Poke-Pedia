@@ -36,13 +36,15 @@ npm run check
 npm run lint
 npm run format:check
 npm test
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 npm run test:e2e
+npm run test:e2e:compact
+npm run report:browser-engines
 npm run benchmark:check
 npm audit
 ```
 
-The final local validation has 23 passing unit/API tests and 19 passing browser scenarios, passing type/lint/format/build checks, passing deterministic performance budgets, and zero reported dependency vulnerabilities. These are Chromium lab results; the next session should rerun checks for its changes and inspect remote CI separately.
+The latest continuation has 30 passing unit/API tests and 22 browser scenarios passing in each of Chromium, Firefox and WebKit for each standard/compact production mode: 132 executions, without skips or flaky outcomes. Type/lint/format/build checks and both performance budgets pass; dependency audit reports zero vulnerabilities. The cross-engine run fixes route-owned URL updates and native control contrast, and uses verified origin socket outages for offline data. Earlier Chromium migration and shared-pacing evidence remains intact, alongside the 3,683-case split experiment. Latest plan-render evidence is in docs/verification.json. These are desktop engine lab results; rerun checks for subsequent changes and inspect remote CI separately. The standard local build was restored. The user requested committing and pushing the continuation batches to origin/main; use Git history and the upstream comparison to verify their current publication status. Historical uncommitted notes in the implementation record describe the state when those batches were delivered.
 
 `docs/performance-baseline.json` retains the recorded lab run: cold median 4.45 seconds, warm median 1.89 seconds, about 0.37 seconds search response including debounce, 259.4 KiB cold same-origin transfer, and 40 initial cards. Its media-blocked throttled profile and unthrottled worker probe are described in the report. `npm run benchmark:check` writes a disposable report under ignored `tmp/review`; it does not replace the baseline. To publish a new measured baseline, build, run `npm run benchmark`, run `npx tsx scripts/performance-report.ts`, and update the documented results and limitations together.
 
@@ -50,8 +52,8 @@ For offline browser review, build and preview on localhost, allow the first onli
 
 ## Next priorities
 
-1. Evaluate a compact catalogue index with separate detail files against the saved baseline. Measure transfer, first-results/search behavior, comparison and team loading, and offline availability before accepting a design change. The current complete catalogue is about 950 kB uncompressed.
-2. Check full-media loading, globally shaped worker installation, other browser engines, screen readers, live audio and physical touch devices. Measure field performance and actual-host compression/cache behavior once a hosting destination is authorized.
+1. Review [browser-engine validation](browser-engine-validation.md): the complete functional matrix now passes in Chromium, Firefox and WebKit for both modes. Compact remains opt-in. Before changing the default, evaluate isolated browser decoding cost and full-media/field conditions; functional timings do not establish performance wins. `report:browser-engines` requires complete unskipped matrices. Offline tests must retain one worker because the test-only origin outage is shared by the preview server.
+2. Check full-media loading, actual cry decoding/audibility, screen readers, physical touch devices and minimum browser versions. Desktop Playwright WebKit does not certify Safari devices. Earlier [worker validation](transport-offline-validation.md) verifies Chromium representation updates and shared page/worker response pacing, with CPU/upload unshaped. Measure field performance and actual-host compression/cache/rollback behavior once a hosting destination is authorized. Historical compact/split reports and the original baseline remain intact; their reproduction commands each replace only their own evidence JSON.
 3. Expand translations beyond species names/descriptions if requested. Interface labels and form, move and location identifiers remain English; current types/stats are not historical game values.
 4. Prepare the chosen host's absolute social preview image and verify deployment rollback. For a GitHub repository site at this remote, the base would be `/Poke-Pedia/`; `/PokemonPedia/` is the browser-test/local-review fixture. No public deployment has been performed.
 

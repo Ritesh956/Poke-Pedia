@@ -7,6 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "dev:server": "cross-env NODE_ENV=development tsx server/index.ts",
     "build": "vite build",
+    "build:compact": "cross-env VITE_COMPACT_CATALOGUE=1 vite build",
     "build:server": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "preview": "vite preview --host 127.0.0.1",
@@ -14,6 +15,8 @@
     "data:sync": "tsx scripts/sync-pokemon-data.ts",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:e2e:compact": "cross-env VITE_COMPACT_CATALOGUE=1 playwright test",
+    "report:browser-engines": "tsx scripts/browser-engine-report.ts",
     "lint": "eslint client/src/pages client/src/components client/src/lib shared server scripts tests *.ts client/service-worker.js",
     "format": "prettier --write client/src shared server scripts tests *.ts *.json *.js README.md AGENTS.md .github/workflows/ci.yml client/service-worker.js client/public/manifest.webmanifest \"docs/*.md\" \"docs/*.json\"",
     "format:check": "prettier --check client/src shared server scripts tests *.ts *.json *.js README.md AGENTS.md .github/workflows/ci.yml client/service-worker.js client/public/manifest.webmanifest \"docs/*.md\" \"docs/*.json\"",
@@ -21,6 +24,9 @@
     "data:forms": "tsx scripts/sync-forms.ts",
     "data:reference": "tsx scripts/sync-reference.ts",
     "benchmark": "tsx scripts/benchmark.ts",
+    "benchmark:index": "tsx scripts/evaluate-catalogue.ts",
+    "benchmark:catalogue": "tsx scripts/compare-catalogue-builds.ts",
+    "validate:offline-transports": "tsx scripts/validate-offline-transports.ts",
     "benchmark:check": "tsx scripts/benchmark.ts --check --output=tmp/review/performance-check.json"
   },
   "dependencies": {

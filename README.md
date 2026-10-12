@@ -37,6 +37,14 @@ npm run build
 npm run benchmark
 # Enforce deterministic transfer/card/offline-download guardrails:
 npm run benchmark:check
+# Evaluate a compact index without changing published data or app loading:
+npm run benchmark:index
+# Build and measure the lossless optional catalogue transport in the real app:
+npm run build:compact
+npm run test:e2e:compact
+npm run benchmark:catalogue
+# Verify real representation updates and paced page/worker installation:
+npm run validate:offline-transports
 ```
 
 The benchmark starts and closes its own production preview. It takes three cold browser-context samples and three warm document reloads at 390 by 844 pixels, 150 ms latency, 1.6 Mbps download, 750 kbps upload, and 4x CPU slowdown. Normal HTTP caching remains enabled. Artwork and cry hosts are blocked, and service workers are blocked for the core timing samples. A separate unthrottled installation probe counts actual preview-server catalogue requests as well as browser fetch operations. Warm fetches and worker fetches may be fulfilled by HTTP cache without reaching the server.
@@ -44,6 +52,12 @@ The benchmark starts and closes its own production preview. It takes three cold 
 `docs/performance-baseline.json` retains every sample and its median. This is a lab diagnostic; it is not a Lighthouse score, INP measurement, physical-phone benchmark or complete artwork-inclusive load test. Search timing includes the existing 300 ms debounce. CI checks cold same-origin transfer up to 280 KiB, no more than 40 initially mounted cards, and at most one actual catalogue HTTP request during offline installation. Timing values are recorded rather than hard-gated because host load varies.
 
 Offline preparation starts after catalogue data has loaded and a frame has painted. Immutable catalogue and hashed asset URLs can reuse HTTP cache; shell and manifest requests still refresh. The controlled cache-policy reports use the same application and deferred installer, changing only the worker cache policy to compare two server catalogue requests under forced reload with one under the current policy. See the performance report for results and remaining work.
+
+The historical [compact-index evaluation](docs/catalogue-evaluation.md) records a 40.8% gzip catalogue payload saving in an isolated data-path harness, added detail latency and unavailable unvisited details offline. That split candidate remains deferred; its timings are not full-application benchmarks.
+
+The subsequent [lossless application evaluation](docs/compact-application-evaluation.md) preserves every default-variety field and full catalogue offline coverage in an opt-in `build:compact` production build. It reduces measured cold application transfer by 10.1% in the matched lab run, with similar cold timing medians. Standard builds remain the default. `benchmark:catalogue` builds both variants in ignored temporary directories and saves their complete reports together; it does not replace the historical baseline or `dist/public`. Compact mode is generated during production builds; development and the optional API retain standard data. Return a local compact preview to standard with `npm run build`.
+
+[Worker migration and installation checks](docs/transport-offline-validation.md) now verify actual standard-to-compact and compact-to-standard updates, favorite preservation, failed-install recovery and complete default offline workflows. Six installations also pass behind a proxy that paces both page and worker response bodies at 1.6 Mbps with 150 ms added latency. This is a local lab profile with CPU/upload unshaped and media blocked. The command builds in ignored directories and retains request-level evidence; it does not change `dist/public` or publish a site.
 
 ## Updating the improvement plans
 
@@ -92,13 +106,15 @@ npm run check
 npm run lint
 npm run format:check
 npm test
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 npm run test:e2e
+npm run test:e2e:compact
+npm run report:browser-engines
 npm run build
 npm run preview
 ```
 
-Browser tests exercise search, keyboard details and selectors, comparison, evolution races, retry recovery, missing images, and layouts at 320, 390, 768, 1024, and 1440 pixels. They build and preview the production client under `/PokemonPedia/` to check repository base paths. CI runs these checks without refreshing upstream data. `npm run format` formats application and supporting source; template UI primitives are excluded from formatting and linting.
+Browser tests run 22 scenarios in each of Chromium, Firefox and WebKit, for both standard and compact production builds. They exercise search, delayed navigation, keyboard details/selectors, comparison, evolution races, retries, missing images, collections, teams, forms, references, quiz and offline behavior, with layouts at 320, 390, 768, 1024 and 1440 pixels. An origin-level socket-outage fixture verifies offline data even when browser emulation leaves worker traffic online; the suite stays serial with one worker. Both commands build and preview under `/PokemonPedia/`. `report:browser-engines` publishes a summary only after all six profiles pass without skips or flaky outcomes. See [browser-engine validation](docs/browser-engine-validation.md) for evidence and limits. CI runs these checks without refreshing upstream data. `npm run format` formats application and supporting source; template UI primitives are excluded from formatting and linting.
 
 ## Data snapshots
 

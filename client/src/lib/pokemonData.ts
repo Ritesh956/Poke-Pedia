@@ -7,6 +7,10 @@ import {
 } from '@shared/schema';
 import { formsSchema, formsManifestSchema } from '@shared/forms';
 import { referenceSchema, referenceManifestSchema } from '@shared/reference';
+import {
+  compactCatalogueFilename,
+  decodeCompactCatalogue,
+} from '@shared/compact-catalogue';
 export async function fetchJson(
   file: string,
   signal?: AbortSignal,
@@ -27,9 +31,15 @@ export function useCatalogue() {
       const manifest = manifestSchema.parse(
         await fetchJson('manifest.json', signal),
       );
-      const pokemon = catalogueSchema.parse(
-        await fetchJson(`${manifest.version}/catalogue.json`, signal),
+      const compact =
+        import.meta.env.PROD && import.meta.env.VITE_COMPACT_CATALOGUE === '1';
+      const data = await fetchJson(
+        `${manifest.version}/${compact ? compactCatalogueFilename : 'catalogue.json'}`,
+        signal,
       );
+      const pokemon = compact
+        ? decodeCompactCatalogue(data)
+        : catalogueSchema.parse(data);
       if (pokemon.length !== manifest.recordCount)
         throw new Error('The saved catalogue is incomplete. Please try again.');
       return { manifest, pokemon };

@@ -171,7 +171,22 @@ export interface Filters {
   baby: boolean;
   sort: 'id' | 'name' | 'height' | 'weight';
 }
-export function filterPokemon(records: Pokemon[], filters: Filters): Pokemon[] {
+export type SearchablePokemon = Pick<
+  Pokemon,
+  | 'speciesId'
+  | 'name'
+  | 'slug'
+  | 'types'
+  | 'height'
+  | 'weight'
+  | 'isLegendary'
+  | 'isMythical'
+  | 'isBaby'
+>;
+export function filterPokemon<T extends SearchablePokemon>(
+  records: T[],
+  filters: Filters,
+): T[] {
   const query = filters.query.trim().toLocaleLowerCase(),
     id = /^#?\d+$/.test(query) ? Number(query.replace('#', '')) : null;
   return records

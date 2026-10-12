@@ -16,7 +16,7 @@ export default function Detail() {
   const pokemon = query.data?.pokemon.find(
     (p) => p.speciesId === Number(params.id),
   );
-  const [url, setUrl] = useUrlState(),
+  const [url, setUrl] = useUrlState(`/pokemon/${params.id}`),
     forms = useForms(pokemon?.speciesId);
   const selected =
     forms.data?.forms.find((form) => form.id === Number(url.get('form'))) ??

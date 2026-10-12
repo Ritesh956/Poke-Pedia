@@ -1,0 +1,259 @@
+{
+  "generatedAt": "2026-10-11T19:31:10.828Z",
+  "snapshot": "f543ff5c327b41a9",
+  "browserVersion": "156.0.8078.4",
+  "profile": {
+    "latencyMs": 150,
+    "downloadBitsPerSecond": 1600000,
+    "cpuSlowdown": 4
+  },
+  "methodology": "Data-path prototype only, not production UI or a replacement for the saved application baseline. Three fresh contexts per mode, each followed by a Cache API warm reload; normal HTTP caching enabled. Gzip local server, 150 ms latency, 1.6 Mbps download and 4x CPU slowdown. Minimal 40 text cards, no media, manifest or route shell. Shared production filter and Zod schemas bundled in the same harness. Comparison and team detail hydration follow warm index loading. Cache API tests cover visited/unvisited detail data only; no service-worker installation, offline navigation, eviction or update lifecycle is measured.",
+  "parityCases": 3683,
+  "payloads": {
+    "full": {
+      "rawBytes": 949237,
+      "gzipBytes": 136042
+    },
+    "index": {
+      "rawBytes": 418870,
+      "gzipBytes": 80505
+    },
+    "allDetails": {
+      "files": 1025,
+      "rawBytes": 948211,
+      "gzipBytes": 495696
+    }
+  },
+  "summary": {
+    "full": {
+      "cold": {
+        "readyMs": 1487.4000000003725,
+        "searchMs": 3.900000000372529,
+        "dataTransferBytes": 136342
+      },
+      "warm": {
+        "readyMs": 444,
+        "searchMs": 1.7000000001862645,
+        "dataTransferBytes": 0
+      }
+    },
+    "split": {
+      "cold": {
+        "readyMs": 956.9000000003725,
+        "searchMs": 3.199999999254942,
+        "dataTransferBytes": 80805
+      },
+      "warm": {
+        "readyMs": 257.29999999981374,
+        "searchMs": 1.2999999998137355,
+        "dataTransferBytes": 0
+      }
+    }
+  },
+  "samples": [
+    {
+      "run": 1,
+      "mode": "full",
+      "state": "cold",
+      "readyMs": 1314.699999999255,
+      "searchMs": 3.900000000372529,
+      "count": 1025,
+      "dataTransferBytes": 136342
+    },
+    {
+      "run": 1,
+      "mode": "full",
+      "state": "warm",
+      "readyMs": 444,
+      "searchMs": 1.2000000001862645,
+      "count": 1025,
+      "dataTransferBytes": 0
+    },
+    {
+      "run": 1,
+      "mode": "full",
+      "workflows": [
+        {
+          "name": "comparison",
+          "elapsedMs": 2.5
+        },
+        {
+          "name": "team",
+          "elapsedMs": 3.099999999627471
+        }
+      ],
+      "offlineVisitedDetails": true,
+      "offlineUnvisitedDetails": true
+    },
+    {
+      "run": 1,
+      "mode": "split",
+      "state": "cold",
+      "readyMs": 940.5,
+      "searchMs": 3.199999999254942,
+      "count": 1025,
+      "dataTransferBytes": 80805
+    },
+    {
+      "run": 1,
+      "mode": "split",
+      "state": "warm",
+      "readyMs": 257.29999999981374,
+      "searchMs": 0.7999999998137355,
+      "count": 1025,
+      "dataTransferBytes": 0
+    },
+    {
+      "run": 1,
+      "mode": "split",
+      "workflows": [
+        {
+          "name": "comparison",
+          "elapsedMs": 237.90000000037253
+        },
+        {
+          "name": "team",
+          "elapsedMs": 266.09999999962747
+        }
+      ],
+      "offlineVisitedDetails": true,
+      "offlineUnvisitedDetails": false
+    },
+    {
+      "run": 2,
+      "mode": "split",
+      "state": "cold",
+      "readyMs": 956.9000000003725,
+      "searchMs": 3.199999999254942,
+      "count": 1025,
+      "dataTransferBytes": 80805
+    },
+    {
+      "run": 2,
+      "mode": "split",
+      "state": "warm",
+      "readyMs": 259.90000000037253,
+      "searchMs": 1.2999999998137355,
+      "count": 1025,
+      "dataTransferBytes": 0
+    },
+    {
+      "run": 2,
+      "mode": "split",
+      "workflows": [
+        {
+          "name": "comparison",
+          "elapsedMs": 218.29999999981374
+        },
+        {
+          "name": "team",
+          "elapsedMs": 237.20000000018626
+        }
+      ],
+      "offlineVisitedDetails": true,
+      "offlineUnvisitedDetails": false
+    },
+    {
+      "run": 2,
+      "mode": "full",
+      "state": "cold",
+      "readyMs": 1553,
+      "searchMs": 5.900000000372529,
+      "count": 1025,
+      "dataTransferBytes": 136342
+    },
+    {
+      "run": 2,
+      "mode": "full",
+      "state": "warm",
+      "readyMs": 441.29999999981374,
+      "searchMs": 1.7000000001862645,
+      "count": 1025,
+      "dataTransferBytes": 0
+    },
+    {
+      "run": 2,
+      "mode": "full",
+      "workflows": [
+        {
+          "name": "comparison",
+          "elapsedMs": 3.2000000001862645
+        },
+        {
+          "name": "team",
+          "elapsedMs": 3.7999999998137355
+        }
+      ],
+      "offlineVisitedDetails": true,
+      "offlineUnvisitedDetails": true
+    },
+    {
+      "run": 3,
+      "mode": "full",
+      "state": "cold",
+      "readyMs": 1487.4000000003725,
+      "searchMs": 3.099999999627471,
+      "count": 1025,
+      "dataTransferBytes": 136342
+    },
+    {
+      "run": 3,
+      "mode": "full",
+      "state": "warm",
+      "readyMs": 486.6000000005588,
+      "searchMs": 2.599999999627471,
+      "count": 1025,
+      "dataTransferBytes": 0
+    },
+    {
+      "run": 3,
+      "mode": "full",
+      "workflows": [
+        {
+          "name": "comparison",
+          "elapsedMs": 3.3999999994412065
+        },
+        {
+          "name": "team",
+          "elapsedMs": 3.5
+        }
+      ],
+      "offlineVisitedDetails": true,
+      "offlineUnvisitedDetails": true
+    },
+    {
+      "run": 3,
+      "mode": "split",
+      "state": "cold",
+      "readyMs": 958.1000000005588,
+      "searchMs": 3.5,
+      "count": 1025,
+      "dataTransferBytes": 80805
+    },
+    {
+      "run": 3,
+      "mode": "split",
+      "state": "warm",
+      "readyMs": 224.70000000018626,
+      "searchMs": 1.400000000372529,
+      "count": 1025,
+      "dataTransferBytes": 0
+    },
+    {
+      "run": 3,
+      "mode": "split",
+      "workflows": [
+        {
+          "name": "comparison",
+          "elapsedMs": 217.79999999981374
+        },
+        {
+          "name": "team",
+          "elapsedMs": 234.70000000018626
+        }
+      ],
+      "offlineVisitedDetails": true,
+      "offlineUnvisitedDetails": false
+    }
+  ]
+}

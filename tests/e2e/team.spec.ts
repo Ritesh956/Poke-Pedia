@@ -99,7 +99,8 @@ test('imports valid teams, preserves them on invalid imports, and excludes unava
 });
 test('team coverage failure can be retried without losing selections and layouts fit narrow screens', async ({
   page,
-}) => {
+}, testInfo) => {
+  const capture = `${process.env.VITE_COMPACT_CATALOGUE === '1' ? 'compact' : 'standard'}-${testInfo.project.name}`;
   await page.route('**/data/type-chart.json', (route) =>
     route.fulfill({ status: 503, body: '{}' }),
   );
@@ -122,12 +123,12 @@ test('team coverage failure can be retried without losing selections and layouts
       .toBe(true);
   }
   await page.screenshot({
-    path: 'tmp/review/team-desktop.png',
+    path: `tmp/review/${capture}-team-desktop.png`,
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({
-    path: 'tmp/review/team-mobile.png',
+    path: `tmp/review/${capture}-team-mobile.png`,
     fullPage: false,
   });
   await page.evaluate(() => {

@@ -92,7 +92,7 @@ function Branch({
 }
 export default function Evolution() {
   const catalogue = useCatalogue(),
-    [params, setParams] = useUrlState(),
+    [params, setParams] = useUrlState('/evolution'),
     selectedId = params.get('pokemon') ?? '';
   const records = catalogue.data?.pokemon ?? [],
     selected = records.find((p) => String(p.speciesId) === selectedId);

@@ -13,7 +13,7 @@ import { useCollection } from '@/lib/collection';
 export default function Home() {
   const query = useCatalogue();
   const { collection } = useCollection();
-  const [params, setParams] = useUrlState();
+  const [params, setParams] = useUrlState('/');
   const [page, setPage] = useState({ key: '', count: 40 });
   const filters: Filters = {
     query: params.get('q') ?? '',

@@ -7,7 +7,7 @@ import { PokemonSelector } from '@/components/PokemonSelector';
 import { PokemonSummary } from '@/components/PokemonSummary';
 export default function Compare() {
   const query = useCatalogue(),
-    [params, setParams] = useUrlState();
+    [params, setParams] = useUrlState('/compare');
   const records = query.data?.pokemon ?? [],
     first = params.get('first') ?? '',
     second = params.get('second') ?? '';

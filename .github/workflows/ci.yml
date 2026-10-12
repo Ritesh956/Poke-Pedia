@@ -15,6 +15,15 @@ jobs:
       - run: npm run format:check
       - run: npm test
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:e2e
-      - run: npm run benchmark:check
+      - name: Standard performance budgets
+        run: npm run benchmark:check
+      - name: Compact browser regression
+        run: npm run test:e2e:compact
+      - name: Summarize browser engine validation
+        run: npm run report:browser-engines
+      - name: Compact performance budgets
+        run: npm run benchmark:check
+      - name: Offline transport migrations and shared network pacing
+        run: npm run validate:offline-transports

@@ -1,9 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 import { readFile, writeFile } from 'node:fs/promises';
 test.use({ serviceWorkers: 'allow' });
 test('saved catalogue, visited forms and families, team, and quiz work after an offline reload', async ({
   page,
-  context,
+  setOriginOffline,
 }) => {
   await page.goto('./');
   await expect(page.locator('.pokemon-card')).toHaveCount(40);
@@ -40,7 +40,7 @@ test('saved catalogue, visited forms and families, team, and quiz work after an 
       ),
     )
     .toBeGreaterThan(0);
-  await context.setOffline(true);
+  await setOriginOffline();
   await page.reload();
   await expect(
     page.getByRole('heading', { name: 'Bulbasaur family' }),

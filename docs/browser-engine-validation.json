@@ -1,0 +1,1184 @@
+{
+  "generatedAt": "2026-10-12T09:14:27.260Z",
+  "runtime": {
+    "node": "v22.13.1",
+    "platform": "win32",
+    "architecture": "x64"
+  },
+  "versions": {
+    "chromium": "156.0.8078.4",
+    "firefox": "157.0",
+    "webkit": "27.2"
+  },
+  "methodology": "The complete 22-scenario Playwright application suite runs serially once per Chromium, Firefox and WebKit project in each standard and compact production build under /PokemonPedia/. Every scenario must pass with no skips, flaky retries or expected failures before this summary publishes. Offline-data scenarios combine browser offline mode with a test-only preview middleware that closes origin sockets; an independent Node fetch must reject. This prevents worker-side network access from bypassing browser offline emulation. The same-origin outage fixture relies on the configured single worker and always removes its marker. Tests include emulated touch, keyboard, large text, fallback media, collections/backups, forms, references, quiz, comparison, teams, invalid data/retries, offline eviction and explicit updates. Audio behavior uses a deterministic audio double. Durations are functional test timings, not decoding benchmarks or field performance. WebKit on Windows is a Playwright engine, not a certification of Safari or physical Apple devices.",
+  "fixes": [
+    "Each page owns its URL parameter updates, preventing delayed search or import callbacks from modifying a different destination route.",
+    "Added a slow detail-chunk navigation regression and reliable origin-level outage fixtures for offline data tests.",
+    "Declared the incumbent dark native-control scheme so WebKit selectors remain readable without changing the application layout."
+  ],
+  "limits": "Physical touch devices, screen readers, live audio decoding, complete-media performance, browser-minimum-version coverage, independent decode profiling, field metrics and public-host deployment remain pending.",
+  "modes": {
+    "standard": {
+      "startTime": "2026-10-12T08:58:17.251Z",
+      "durationMs": 407940.402,
+      "engines": {
+        "chromium": {
+          "passed": 22,
+          "skipped": 0,
+          "failed": 0
+        },
+        "firefox": {
+          "passed": 22,
+          "skipped": 0,
+          "failed": 0
+        },
+        "webkit": {
+          "passed": 22,
+          "skipped": 0,
+          "failed": 0
+        }
+      },
+      "scenarios": [
+        {
+          "file": "audio.spec.ts",
+          "scenario": "cry loads only on explicit play, works after waiting, and stops previous playback",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 5121,
+          "annotations": []
+        },
+        {
+          "file": "audio.spec.ts",
+          "scenario": "cry loads only on explicit play, works after waiting, and stops previous playback",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 8679,
+          "annotations": []
+        },
+        {
+          "file": "audio.spec.ts",
+          "scenario": "cry loads only on explicit play, works after waiting, and stops previous playback",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 6295,
+          "annotations": []
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "invalid catalogue transport is retryable without presenting partial results",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2490,
+          "annotations": []
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "invalid catalogue transport is retryable without presenting partial results",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3171,
+          "annotations": []
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "invalid catalogue transport is retryable without presenting partial results",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 2478,
+          "annotations": []
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "unvisited summaries and comparison survive reload while visited data evicts at forty",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 8486,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "unvisited summaries and comparison survive reload while visited data evicts at forty",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 12914,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "unvisited summaries and comparison survive reload while visited data evicts at forty",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 11255,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "favorites and caught work by tap and keyboard, persist, filter and export/import",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2546,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "blocked storage preserves session actions and explains the limitation",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 927,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "200 percent text size keeps catalogue and collection controls within the viewport",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 984,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "favorites and caught work by tap and keyboard, persist, filter and export/import",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 4464,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "blocked storage preserves session actions and explains the limitation",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 2131,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "200 percent text size keeps catalogue and collection controls within the viewport",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 1821,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "favorites and caught work by tap and keyboard, persist, filter and export/import",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 5126,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "blocked storage preserves session actions and explains the limitation",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 1372,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "200 percent text size keeps catalogue and collection controls within the viewport",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 1498,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "switches matching form data, preserves URL state, and falls back from shiny artwork",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 1844,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "random discovery and type quiz work without artwork and count only one answer",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 1626,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "switches matching form data, preserves URL state, and falls back from shiny artwork",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3965,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "random discovery and type quiz work without artwork and count only one answer",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3356,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "switches matching form data, preserves URL state, and falls back from shiny artwork",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3174,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "random discovery and type quiz work without artwork and count only one answer",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3105,
+          "annotations": []
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "saved catalogue, visited forms and families, team, and quiz work after an offline reload",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 7339,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "a new worker waits for an explicit update and retains the preceding cache version",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 3288,
+          "annotations": []
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "saved catalogue, visited forms and families, team, and quiz work after an offline reload",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 12462,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "a new worker waits for an explicit update and retains the preceding cache version",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 6589,
+          "annotations": []
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "saved catalogue, visited forms and families, team, and quiz work after an offline reload",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 10996,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "a new worker waits for an explicit update and retains the preceding cache version",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3126,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue search, bounded cards, reset, keyboard details and URL refresh",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2901,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "filter keyboard semantics and empty recovery",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2007,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "a pending catalogue search cannot change a slowly loading detail URL",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2161,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "comparison preselection, searchable keyboard selector, swap and reload",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2628,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "evolution branches, baby order, failures and selection races",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 5549,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue failure is retryable and never shows a zero-results state",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2400,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "responsive pages and image fallback",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 14738,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue search, bounded cards, reset, keyboard details and URL refresh",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 6327,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "filter keyboard semantics and empty recovery",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3661,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "a pending catalogue search cannot change a slowly loading detail URL",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3159,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "comparison preselection, searchable keyboard selector, swap and reload",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 5128,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "evolution branches, baby order, failures and selection races",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 6774,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue failure is retryable and never shows a zero-results state",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3022,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "responsive pages and image fallback",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 20494,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue search, bounded cards, reset, keyboard details and URL refresh",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 5544,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "filter keyboard semantics and empty recovery",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3601,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "a pending catalogue search cannot change a slowly loading detail URL",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3297,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "comparison preselection, searchable keyboard selector, swap and reload",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 4460,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "evolution branches, baby order, failures and selection races",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 6763,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue failure is retryable and never shows a zero-results state",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 2499,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "responsive pages and image fallback",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 23394,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "localized names and descriptions preserve game and language in the URL",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 1969,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "reference failure is retryable, unsupported selections are explained, and narrow layouts fit",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2536,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "localized names and descriptions preserve game and language in the URL",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3951,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "reference failure is retryable, unsupported selections are explained, and narrow layouts fit",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3877,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "localized names and descriptions preserve game and language in the URL",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3291,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "reference failure is retryable, unsupported selections are explained, and narrow layouts fit",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3100,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "builds six slots by keyboard, allows duplicates, shares, reloads, and exports",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 6563,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "imports valid teams, preserves them on invalid imports, and excludes unavailable slots",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 4076,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "team coverage failure can be retried without losing selections and layouts fit narrow screens",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 4028,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "builds six slots by keyboard, allows duplicates, shares, reloads, and exports",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 11464,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "imports valid teams, preserves them on invalid imports, and excludes unavailable slots",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 8875,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "team coverage failure can be retried without losing selections and layouts fit narrow screens",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 6851,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "builds six slots by keyboard, allows duplicates, shares, reloads, and exports",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 9822,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "imports valid teams, preserves them on invalid imports, and excludes unavailable slots",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 7789,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "team coverage failure can be retried without losing selections and layouts fit narrow screens",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 5796,
+          "annotations": []
+        }
+      ]
+    },
+    "compact": {
+      "startTime": "2026-10-12T09:07:04.854Z",
+      "durationMs": 407736.825,
+      "engines": {
+        "chromium": {
+          "passed": 22,
+          "skipped": 0,
+          "failed": 0
+        },
+        "firefox": {
+          "passed": 22,
+          "skipped": 0,
+          "failed": 0
+        },
+        "webkit": {
+          "passed": 22,
+          "skipped": 0,
+          "failed": 0
+        }
+      },
+      "scenarios": [
+        {
+          "file": "audio.spec.ts",
+          "scenario": "cry loads only on explicit play, works after waiting, and stops previous playback",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 5205,
+          "annotations": []
+        },
+        {
+          "file": "audio.spec.ts",
+          "scenario": "cry loads only on explicit play, works after waiting, and stops previous playback",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 8938,
+          "annotations": []
+        },
+        {
+          "file": "audio.spec.ts",
+          "scenario": "cry loads only on explicit play, works after waiting, and stops previous playback",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 6359,
+          "annotations": []
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "invalid catalogue transport is retryable without presenting partial results",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 5558,
+          "annotations": []
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "invalid catalogue transport is retryable without presenting partial results",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 2976,
+          "annotations": []
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "invalid catalogue transport is retryable without presenting partial results",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 2613,
+          "annotations": []
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "unvisited summaries and comparison survive reload while visited data evicts at forty",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 8444,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "unvisited summaries and comparison survive reload while visited data evicts at forty",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 13441,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "catalogue-transport.spec.ts",
+          "scenario": "unvisited summaries and comparison survive reload while visited data evicts at forty",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 10892,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "favorites and caught work by tap and keyboard, persist, filter and export/import",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2378,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "blocked storage preserves session actions and explains the limitation",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 893,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "200 percent text size keeps catalogue and collection controls within the viewport",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 1024,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "favorites and caught work by tap and keyboard, persist, filter and export/import",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 4337,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "blocked storage preserves session actions and explains the limitation",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 1796,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "200 percent text size keeps catalogue and collection controls within the viewport",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 1726,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "favorites and caught work by tap and keyboard, persist, filter and export/import",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 5056,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "blocked storage preserves session actions and explains the limitation",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 1391,
+          "annotations": []
+        },
+        {
+          "file": "collection.spec.ts",
+          "scenario": "200 percent text size keeps catalogue and collection controls within the viewport",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 1341,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "switches matching form data, preserves URL state, and falls back from shiny artwork",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 1788,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "random discovery and type quiz work without artwork and count only one answer",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 1604,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "switches matching form data, preserves URL state, and falls back from shiny artwork",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3452,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "random discovery and type quiz work without artwork and count only one answer",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 2975,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "switches matching form data, preserves URL state, and falls back from shiny artwork",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3207,
+          "annotations": []
+        },
+        {
+          "file": "forms-discovery.spec.ts",
+          "scenario": "random discovery and type quiz work without artwork and count only one answer",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 2914,
+          "annotations": []
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "saved catalogue, visited forms and families, team, and quiz work after an offline reload",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 7611,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "a new worker waits for an explicit update and retains the preceding cache version",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 3207,
+          "annotations": []
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "saved catalogue, visited forms and families, team, and quiz work after an offline reload",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 11111,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "a new worker waits for an explicit update and retains the preceding cache version",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 6035,
+          "annotations": []
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "saved catalogue, visited forms and families, team, and quiz work after an offline reload",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 10808,
+          "annotations": [
+            {
+              "type": "offline-fixture",
+              "description": "Origin sockets closed; independent Node fetch rejected; browser offline mode enabled."
+            }
+          ]
+        },
+        {
+          "file": "offline.spec.ts",
+          "scenario": "a new worker waits for an explicit update and retains the preceding cache version",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 2765,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue search, bounded cards, reset, keyboard details and URL refresh",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2678,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "filter keyboard semantics and empty recovery",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2149,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "a pending catalogue search cannot change a slowly loading detail URL",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2197,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "comparison preselection, searchable keyboard selector, swap and reload",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2659,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "evolution branches, baby order, failures and selection races",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 5495,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue failure is retryable and never shows a zero-results state",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2382,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "responsive pages and image fallback",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 14707,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue search, bounded cards, reset, keyboard details and URL refresh",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 5855,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "filter keyboard semantics and empty recovery",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3097,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "a pending catalogue search cannot change a slowly loading detail URL",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3217,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "comparison preselection, searchable keyboard selector, swap and reload",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 5147,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "evolution branches, baby order, failures and selection races",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 7190,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue failure is retryable and never shows a zero-results state",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 2964,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "responsive pages and image fallback",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 20199,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue search, bounded cards, reset, keyboard details and URL refresh",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 6155,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "filter keyboard semantics and empty recovery",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3340,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "a pending catalogue search cannot change a slowly loading detail URL",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3183,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "comparison preselection, searchable keyboard selector, swap and reload",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 4520,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "evolution branches, baby order, failures and selection races",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 6706,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "catalogue failure is retryable and never shows a zero-results state",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 2441,
+          "annotations": []
+        },
+        {
+          "file": "pokemon.spec.ts",
+          "scenario": "responsive pages and image fallback",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 23790,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "localized names and descriptions preserve game and language in the URL",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 1907,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "reference failure is retryable, unsupported selections are explained, and narrow layouts fit",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 2435,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "localized names and descriptions preserve game and language in the URL",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 3674,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "reference failure is retryable, unsupported selections are explained, and narrow layouts fit",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 4129,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "localized names and descriptions preserve game and language in the URL",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3314,
+          "annotations": []
+        },
+        {
+          "file": "reference.spec.ts",
+          "scenario": "reference failure is retryable, unsupported selections are explained, and narrow layouts fit",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 3254,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "builds six slots by keyboard, allows duplicates, shares, reloads, and exports",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 6598,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "imports valid teams, preserves them on invalid imports, and excludes unavailable slots",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 4039,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "team coverage failure can be retried without losing selections and layouts fit narrow screens",
+          "engine": "chromium",
+          "status": "passed",
+          "durationMs": 3830,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "builds six slots by keyboard, allows duplicates, shares, reloads, and exports",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 11622,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "imports valid teams, preserves them on invalid imports, and excludes unavailable slots",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 9070,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "team coverage failure can be retried without losing selections and layouts fit narrow screens",
+          "engine": "firefox",
+          "status": "passed",
+          "durationMs": 6867,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "builds six slots by keyboard, allows duplicates, shares, reloads, and exports",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 10206,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "imports valid teams, preserves them on invalid imports, and excludes unavailable slots",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 7808,
+          "annotations": []
+        },
+        {
+          "file": "team.spec.ts",
+          "scenario": "team coverage failure can be retried without losing selections and layouts fit narrow screens",
+          "engine": "webkit",
+          "status": "passed",
+          "durationMs": 6006,
+          "annotations": []
+        }
+      ]
+    }
+  }
+}

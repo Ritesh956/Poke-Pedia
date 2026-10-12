@@ -2,7 +2,14 @@ import type { Plugin } from 'vite';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-export function offlinePlugin(): Plugin {
+import { catalogueSchema } from '../shared/schema';
+import {
+  compactCatalogueFilename,
+  encodeCompactCatalogue,
+  decodeCompactCatalogue,
+} from '../shared/compact-catalogue';
+import assert from 'node:assert/strict';
+export function offlinePlugin(compact = false): Plugin {
   return {
     name: 'pokemonpedia-offline',
     apply: 'build',
@@ -12,13 +19,33 @@ export function offlinePlugin(): Plugin {
         await readFile(path.join(publicRoot, 'data/manifest.json'), 'utf8'),
       );
       const source = await readFile('client/service-worker.js', 'utf8');
+      const catalogueFile = `data/${manifest.version}/${compact ? compactCatalogueFilename : 'catalogue.json'}`;
+      let compactSource: string | undefined;
+      if (compact) {
+        const records = catalogueSchema.parse(
+          JSON.parse(
+            await readFile(
+              path.join(publicRoot, `data/${manifest.version}/catalogue.json`),
+              'utf8',
+            ),
+          ),
+        );
+        const wire = encodeCompactCatalogue(records);
+        assert.deepEqual(decodeCompactCatalogue(wire), records);
+        compactSource = JSON.stringify(wire) + '\n';
+        this.emitFile({
+          type: 'asset',
+          fileName: catalogueFile,
+          source: compactSource,
+        });
+      }
       const files = [
         '.',
-        ...Object.keys(bundle),
+        ...Object.keys(bundle).filter((file) => file !== catalogueFile),
         'favicon.svg',
         'manifest.webmanifest',
         'data/manifest.json',
-        `data/${manifest.version}/catalogue.json`,
+        catalogueFile,
         'data/forms/manifest.json',
         'data/type-chart.json',
         'data/reference/manifest.json',
@@ -26,7 +53,11 @@ export function offlinePlugin(): Plugin {
       const staticData = await Promise.all(
         files
           .filter((file) => file.startsWith('data/'))
-          .map((file) => readFile(path.join(publicRoot, file))),
+          .map((file) =>
+            compactSource && file === catalogueFile
+              ? Promise.resolve(Buffer.from(compactSource))
+              : readFile(path.join(publicRoot, file)),
+          ),
       );
       const shell = await readFile('client/index.html', 'utf8'),
         webmanifest = await readFile(

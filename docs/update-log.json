@@ -108,5 +108,130 @@
     "validation": "Published data identities and repository destination checked. Fresh type checking, lint, formatting, production build, all 23 unit/API tests and 19 browser scenarios pass. Deterministic performance budgets pass; npm audit reports zero vulnerabilities. Both cumulative plan files were regenerated, all 16 rendered pages inspected and page numbering checked.",
     "remaining": "Remote CI has not run for this commit yet. Compact-index evaluation, broader translation, full-media/field profiling, physical-device/browser/accessibility validation and authorized public hosting remain. Commit and push are requested separately from website deployment.",
     "startNewPage": true
+  },
+  {
+    "step": "Compact catalogue index evaluation",
+    "date": "12 October 2026",
+    "status": "Evaluation complete; production adoption deferred",
+    "done": [
+      "Added an isolated gzip-served Chromium data-path prototype with a card-compatible index and per-species detail payloads derived from the committed snapshot; no upstream refresh or published snapshot changes.",
+      "Generalized the shared filter type to accept the exact search fields without changing filtering behavior. Verified 3683 search, category, type and sort cases against the full catalogue.",
+      "Measured three cold and warm runs per mode, validated comparison/team detail hydration against original records, and checked visited and unvisited detail availability with networking disabled. Retained every sample in docs/catalogue-evaluation.json."
+    ],
+    "validation": "The isolated prototype passed all parity and hydration assertions. Gzip catalogue payload falls from 136042 to 80505 bytes; initial data-path medians are 1487 ms full and 957 ms split. Visited details remain cached; unvisited split details fail offline as expected. These are data-only harness measurements, not production application timings. Fresh type, lint, formatting, production build, all 23 unit/API tests, 19 Chromium browser scenarios and deterministic performance budgets pass; dependency audit reports zero vulnerabilities.",
+    "remaining": "Retain the complete production catalogue to preserve instant comparison and full offline default details. Prototype lacks application routing, media, manifest and service-worker installation/update/eviction checks. A production-equivalent prototype and an explicit offline coverage decision remain necessary before adoption.",
+    "startNewPage": true
+  },
+  {
+    "step": "Evaluation report and continuation handoff",
+    "date": "12 October 2026",
+    "status": "Complete",
+    "done": [
+      "Recorded the candidate fields, sample methodology, measured payloads, detail loading, offline tradeoffs and decision to retain the complete catalogue in docs/catalogue-evaluation.md.",
+      "Updated README, implementation progress, the performance report and next-session priorities to distinguish the completed data-path evaluation from pending application-level validation.",
+      "Extended cumulative plan history with the evaluation and validation evidence; original audit and original application baseline remain historical reference."
+    ],
+    "validation": "Documentation values cross-checked against the retained evaluation JSON. Code and browser validation passed as recorded in the preceding step. The latest Word/PDF render inspection result is recorded in docs/verification.json.",
+    "remaining": "Production adoption, worker lifecycle verification for a split design, broader translations and release checks remain pending. This batch is local; public deployment still needs a destination and authorization."
+  },
+  {
+    "step": "Lossless compact catalogue prototype",
+    "date": "12 October 2026",
+    "status": "Implemented and browser validated as an opt-in build",
+    "done": [
+      "Introduced a versioned column transport with shared text and media-prefix dictionaries, ordered stats and full reconstruction through the existing catalogue schema. No default-variety fields are dropped.",
+      "Added an opt-in VITE_COMPACT_CATALOGUE=1 production build. It derives and round-trip validates its own compact file from the committed catalogue, without upstream requests or a manifest change. Standard builds retain the existing catalogue.",
+      "Wired compact loading to existing retries and AbortSignal handling, precached exactly one catalogue representation and extended immutable HTTP cache reuse and benchmark request counting to the compact filename."
+    ],
+    "validation": "27 unit/API tests and all 21 compact-build Chromium browser scenarios pass. Full-snapshot round trips, invalid transport rejection/retry, unvisited offline default summaries, comparison, teams, visited-data eviction at 40 entries and the existing explicit worker-update lifecycle are validated. Matching performance comparison remains underway.",
+    "remaining": "The compact format remains opt-in. Matching transfer results and timing limits are recorded in the following evaluation step; full-media, device, field and release checks remain separate.",
+    "startNewPage": true
+  },
+  {
+    "step": "Matched application catalogue evaluation",
+    "date": "12 October 2026",
+    "status": "Complete within Chromium core lab scope",
+    "done": [
+      "Added a reproducible command that builds standard and compact applications in isolated ignored directories under the same repository base and runs the existing benchmark against each.",
+      "Retained both reports and all samples in docs/compact-application-evaluation.json. Cold transfer fell from 266001 to 239079 bytes; catalogue gzip fell from 136042 to 109102 bytes. Both builds retained 40 initial cards and one actual catalogue HTTP request during offline installation.",
+      "Measured similar cold medians of 5.26 seconds standard and 5.31 seconds compact. Kept the standard default and exposed build:compact and test:e2e:compact for the verified optional transport, without changing source manifests, upstream data or application design."
+    ],
+    "validation": "Both complete production builds pass deterministic transfer/card/catalogue-download budgets. All 21 browser scenarios pass in both standard and compact production builds, including offline summaries, comparison, teams, actual eviction and explicit worker updates. Type checking, lint and all 27 unit/API tests pass; dependency audit reports zero vulnerabilities. The original baseline and earlier split-index experiment remain intact.",
+    "remaining": "Three sequential samples per build with media blocked do not establish causal timing improvement. Worker installation probe is unthrottled. Cross-representation deployment migration, globally shaped installation, media-inclusive loading, other engines, devices and field/hosting checks remain."
+  },
+  {
+    "step": "Compact transport documentation and validation handoff",
+    "date": "12 October 2026",
+    "status": "Complete",
+    "done": [
+      "Recorded the lossless transport, exact payload and application transfer values, overlapping timing samples, complete offline scope and opt-in decision in the application evaluation report.",
+      "Updated README, progress, verification and next-session priorities, preserving the historical split experiment and original application baseline. CI now covers browser scenarios and budgets for both production representations.",
+      "Extended cumulative Word/PDF history and added fresh-process page rendering at 144 dpi, with targeted higher-resolution and antialias-off QA for apparent preview glyph omissions."
+    ],
+    "validation": "27 unit/API tests and 21 browser scenarios pass in each production mode, along with type and lint checks, both matched performance-budget runs and a zero-vulnerability audit. Latest formatting and Word/PDF inspection results are recorded in docs/verification.json.",
+    "remaining": "Changes remain local and uncommitted; remote CI has not run for this batch. The compact build remains opt-in, with cross-representation hosting migration and broader release validation pending."
+  },
+  {
+    "step": "Cross-representation worker migration and failed-update recovery",
+    "date": "12 October 2026",
+    "status": "Complete within local Chromium scope",
+    "done": [
+      "Added a same-origin preview proxy serving genuine standard and compact builds, allowing actual worker scripts, assets and catalogue files to migrate in both directions.",
+      "Verified waiting workers require explicit reload, retain the preceding core version and preserve local favorites. Each new core contains exactly the selected catalogue representation.",
+      "Forced a 503 compact catalogue during an update, verified that the active standard snapshot still reloads offline, cleared the failure and successfully retried. Default summaries, comparison and teams remain available offline after both migration directions."
+    ],
+    "validation": "Standard-to-compact and compact-to-standard migration scenarios pass against fresh production builds. Failed installation, active-snapshot preservation and retry recovery pass. Detailed migration evidence is retained by validate:offline-transports; type checking and lint pass.",
+    "remaining": "This exercises a local same-origin preview, not an authorized public deployment or hosting rollback. Shared installation pacing is recorded in the following step; other engines, real media, devices and field checks remain.",
+    "startNewPage": true
+  },
+  {
+    "step": "Shared network pacing for worker installation",
+    "date": "12 October 2026",
+    "status": "Complete within proxy-shaped Chromium lab scope",
+    "done": [
+      "Applied 150 ms response latency and a shared 1.6 Mbps response-body queue to all same-origin page and worker downloads, with real-worker request events and proxy request logs retained.",
+      "Ran three fresh installations per representation. All six downloaded their catalogue once, reached worker control and passed offline reload, comparison, teams and unvisited default summary checks.",
+      "Recorded medians of 4.12 seconds standard and 3.96 seconds compact to offline readiness, with 294966 and 268026 proxy body bytes respectively. Added the combined migration/installation command to CI and reconciled the reports and handoff."
+    ],
+    "validation": "Two migration directions, failed-update preservation/recovery and all six shared-pacing installation samples pass. Type checking, lint and all 27 unit/API tests pass. The existing 21-scenario suites passed earlier in both modes; application behavior is unchanged in this validation step. HTTP 304 cache revalidation is correctly counted as successful without body transfer. Full evidence is in docs/transport-offline-validation.json; the final passing probe reused builds freshly generated in this batch.",
+    "remaining": "Proxy latency/body pacing does not model CPU, upload or TCP congestion; media is blocked and modes run sequentially. Other engines, full-media/audio, screen readers, physical devices, field performance and actual public-host rollback remain. Standard builds remain the default. Latest formatting and plan inspection evidence is in docs/verification.json."
+  },
+  {
+    "step": "Browser engine rollout and navigation hardening",
+    "date": "12 October 2026",
+    "status": "Complete within cross-engine scope",
+    "done": [
+      "Added Chromium, Firefox and WebKit projects and retained per-mode JSON results and per-engine screenshots; installed the matching local engine binaries and extended CI browser installation.",
+      "Cross-engine execution exposed a delayed catalogue search modifying a WebKit detail URL. URL parameter updates now require the owning page route, protecting navigation from stale search or import callbacks. Added a delayed detail-chunk regression and three unit tests for route ownership and parameter preservation.",
+      "Firefox offline emulation allowed uncached worker traffic to reach the origin. Offline scenarios now use a test-only preview socket-outage fixture, verify that an independent Node fetch rejects, and always remove the marker. Standard preview behavior is unchanged."
+    ],
+    "validation": "Type checking, lint and 30 unit/API tests pass. All 15 focused offline/navigation scenarios pass across Chromium, Firefox and WebKit, including the new slow-navigation regression. Final matrix evidence is recorded in the following validation step; visual review also identified the native-control issue addressed below.",
+    "remaining": "The origin-outage fixture requires the existing single-worker suite. Engine tests use desktop Playwright builds and emulated input; physical devices, screen readers, live audio and full-media/field checks remain.",
+    "startNewPage": true
+  },
+  {
+    "step": "Native browser control contrast",
+    "date": "12 October 2026",
+    "status": "Complete within reviewed engine surfaces",
+    "done": [
+      "Cross-engine screenshots exposed WebKit painting native sort and detail selectors with a light surface despite the application's light text and dark tokens.",
+      "Declared the existing dark color scheme at the root so native selectors and checkboxes use a matching browser surface without replacing the controls or altering application layout.",
+      "Applied Impeccable hardening guidance and completed a batched confirmation of catalogue mobile and detail desktop surfaces in Chromium, Firefox and WebKit."
+    ],
+    "validation": "Six confirmation captures show readable native controls and preserved layout. The mechanical Impeccable detector returned no findings for changed targets. Production build and final functional matrices and transfer budgets pass with this style correction.",
+    "remaining": "Native browser appearances differ by platform; this review uses Playwright on Windows. Physical-device and minimum-version checks remain. No additional visual redesign was performed."
+  },
+  {
+    "step": "Complete browser engine matrix and documentation handoff",
+    "date": "12 October 2026",
+    "status": "Complete within desktop engine lab scope",
+    "done": [
+      "Ran all 22 scenarios in Chromium 156.0.8078.4, Firefox 157.0 and WebKit 27.2 for both standard and compact production builds. All 132 executions pass without skips, expected failures or flaky outcomes.",
+      "Added report:browser-engines, which rejects incomplete or failing matrices before publishing per-case evidence and engine/runtime metadata. Updated CI to install all engines, execute both modes and summarize their results.",
+      "Confirmed both performance budgets after the route and native-theme fixes: 266055 standard and 239127 compact cold same-origin bytes, 40 initial cards and one actual catalogue HTTP request during installation. Reconciled README, progress, verification, handoff and cumulative plan history, and restored the standard local build."
+    ],
+    "validation": "30 unit/API tests, 132 browser-scenario executions, type checking, lint, formatting, standard/compact production builds and deterministic performance budgets pass. Dependency audit reports zero vulnerabilities. Six native-control confirmation captures were reviewed and the detector returned no findings. Complete browser evidence is in docs/browser-engine-validation.json; the latest plan-render inspection is recorded in docs/verification.json.",
+    "remaining": "Current desktop engine builds do not certify minimum browser versions, Safari devices, physical touch or screen-reader use. Audio uses a test double; actual decoding/audibility, full-media/field performance, independent decoder profiling and public-host checks remain. This batch remains local and uncommitted; no upstream refresh, deployment or account change was performed.",
+    "startNewPage": true
   }
 ]

@@ -1,0 +1,2749 @@
+{
+  "reuseBuilds": true,
+  "generatedAt": "2026-10-12T07:48:24.206Z",
+  "browserVersion": "156.0.8078.4",
+  "versions": {
+    "standard": "e6d1da1f917ad029",
+    "compact": "66d0b4ffa7e180b4"
+  },
+  "profile": {
+    "latencyMs": 150,
+    "downloadBitsPerSecond": 1600000
+  },
+  "methodology": "Two actual built representations share one proxy origin. Both migration directions use real worker scripts, waiting state, explicit reload, previous-core retention, collection persistence and offline summary/comparison/team checks. Standard-to-compact also forces a 503 catalogue install failure, verifies the active snapshot survives offline reload, then retries successfully. Installation uses three fresh contexts per mode, with 150 ms added response latency and shared 1.6 Mbps response-body pacing across all same-origin page and service-worker requests. Media is blocked, CPU and upload are unshaped, TCP congestion is not simulated. Totals are proxy-observed body bytes through readiness, excluding headers and cached browser responses. Timings include automation; these are local Chromium/Vite-preview diagnostics, not physical-device or field results. All individual request logs are retained.",
+  "summary": {
+    "standard": {
+      "firstResultsMs": 2695.3449,
+      "readyMs": 4124.163500000002,
+      "bodyBytes": 294966
+    },
+    "compact": {
+      "firstResultsMs": 2684.909599999999,
+      "readyMs": 3960.1637000000046,
+      "bodyBytes": 268026
+    }
+  },
+  "migrations": [
+    {
+      "from": "standard",
+      "to": "compact",
+      "explicitReload": true,
+      "collectionPreserved": true,
+      "previousCoreRetained": true,
+      "offlineWorkflows": true,
+      "failedUpdateRecovered": true,
+      "requests": [
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 856,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "status": 200,
+          "bodyBytes": 113019,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 200,
+          "bodyBytes": 14168,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "status": 200,
+          "bodyBytes": 136042,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/sw.js",
+          "status": 200,
+          "bodyBytes": 1670,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 856,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "status": 200,
+          "bodyBytes": 1012,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Evolution-DA_joxJt.js",
+          "status": 200,
+          "bodyBytes": 1602,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "status": 200,
+          "bodyBytes": 2472,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "status": 200,
+          "bodyBytes": 1772,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "status": 200,
+          "bodyBytes": 3127,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "status": 200,
+          "bodyBytes": 13713,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Discover-CWhceNIz.js",
+          "status": 200,
+          "bodyBytes": 1619,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 200,
+          "bodyBytes": 147,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 200,
+          "bodyBytes": 641,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 200,
+          "bodyBytes": 766,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/sw.js",
+          "status": 200,
+          "bodyBytes": 1672,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 855,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "status": 200,
+          "bodyBytes": 113038,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "status": 200,
+          "bodyBytes": 1007,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Evolution-CLL7hZAL.js",
+          "status": 200,
+          "bodyBytes": 1599,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "status": 200,
+          "bodyBytes": 2468,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "status": 200,
+          "bodyBytes": 1772,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "status": 200,
+          "bodyBytes": 3125,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "status": 200,
+          "bodyBytes": 13711,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Discover-B-d9PIp8.js",
+          "status": 200,
+          "bodyBytes": 1616,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "status": 503,
+          "bodyBytes": 0,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 0,
+          "bodyBytes": 0,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 0,
+          "bodyBytes": 0,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 0,
+          "bodyBytes": 0,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/sw.js",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 855,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "status": 200,
+          "bodyBytes": 109102,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 200,
+          "bodyBytes": 147,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 200,
+          "bodyBytes": 641,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 200,
+          "bodyBytes": 766,
+          "shaped": false
+        }
+      ]
+    },
+    {
+      "from": "compact",
+      "to": "standard",
+      "explicitReload": true,
+      "collectionPreserved": true,
+      "previousCoreRetained": true,
+      "offlineWorkflows": true,
+      "failedUpdateRecovered": false,
+      "requests": [
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 855,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "status": 200,
+          "bodyBytes": 113038,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 200,
+          "bodyBytes": 14168,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "status": 200,
+          "bodyBytes": 109102,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/sw.js",
+          "status": 200,
+          "bodyBytes": 1672,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 855,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "status": 200,
+          "bodyBytes": 1007,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Evolution-CLL7hZAL.js",
+          "status": 200,
+          "bodyBytes": 1599,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "status": 200,
+          "bodyBytes": 2468,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "status": 200,
+          "bodyBytes": 1772,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "status": 200,
+          "bodyBytes": 3125,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "status": 200,
+          "bodyBytes": 13711,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Discover-B-d9PIp8.js",
+          "status": 200,
+          "bodyBytes": 1616,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 200,
+          "bodyBytes": 147,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 200,
+          "bodyBytes": 641,
+          "shaped": false
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 200,
+          "bodyBytes": 766,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/sw.js",
+          "status": 200,
+          "bodyBytes": 1670,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 856,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "status": 200,
+          "bodyBytes": 113019,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "status": 200,
+          "bodyBytes": 1012,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Evolution-DA_joxJt.js",
+          "status": 200,
+          "bodyBytes": 1602,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "status": 200,
+          "bodyBytes": 2472,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "status": 200,
+          "bodyBytes": 1772,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "status": 200,
+          "bodyBytes": 3127,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "status": 200,
+          "bodyBytes": 13713,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Discover-CWhceNIz.js",
+          "status": 200,
+          "bodyBytes": 1619,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "status": 200,
+          "bodyBytes": 136042,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 200,
+          "bodyBytes": 147,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 200,
+          "bodyBytes": 641,
+          "shaped": false
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 200,
+          "bodyBytes": 766,
+          "shaped": false
+        }
+      ]
+    }
+  ],
+  "installations": [
+    {
+      "mode": "standard",
+      "run": 1,
+      "firstResultsMs": 2695.3449,
+      "readyMs": 4045.9242999999988,
+      "bodyBytes": 294966,
+      "catalogueHttpRequests": 1,
+      "offlineReload": true,
+      "offlineWorkflows": true,
+      "requests": [
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 856,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "status": 200,
+          "bodyBytes": 113019,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 200,
+          "bodyBytes": 14168,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "status": 200,
+          "bodyBytes": 136042,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/sw.js",
+          "status": 200,
+          "bodyBytes": 1670,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 856,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "status": 200,
+          "bodyBytes": 1012,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Evolution-DA_joxJt.js",
+          "status": 200,
+          "bodyBytes": 1602,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "status": 200,
+          "bodyBytes": 2472,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "status": 200,
+          "bodyBytes": 1772,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "status": 200,
+          "bodyBytes": 3127,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "status": 200,
+          "bodyBytes": 13713,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Discover-CWhceNIz.js",
+          "status": 200,
+          "bodyBytes": 1619,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 200,
+          "bodyBytes": 147,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 200,
+          "bodyBytes": 641,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 200,
+          "bodyBytes": 766,
+          "shaped": true
+        }
+      ],
+      "browserRequests": [
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/sw.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Evolution-DA_joxJt.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Discover-CWhceNIz.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/favicon.svg",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": true
+        }
+      ]
+    },
+    {
+      "mode": "standard",
+      "run": 2,
+      "firstResultsMs": 2665.4425000000047,
+      "readyMs": 4124.163500000002,
+      "bodyBytes": 294966,
+      "catalogueHttpRequests": 1,
+      "offlineReload": true,
+      "offlineWorkflows": true,
+      "requests": [
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 856,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "status": 200,
+          "bodyBytes": 113019,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 200,
+          "bodyBytes": 14168,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "status": 200,
+          "bodyBytes": 136042,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/sw.js",
+          "status": 200,
+          "bodyBytes": 1670,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 856,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "status": 200,
+          "bodyBytes": 1012,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Evolution-DA_joxJt.js",
+          "status": 200,
+          "bodyBytes": 1602,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "status": 200,
+          "bodyBytes": 2472,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "status": 200,
+          "bodyBytes": 1772,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "status": 200,
+          "bodyBytes": 3127,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "status": 200,
+          "bodyBytes": 13713,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Discover-CWhceNIz.js",
+          "status": 200,
+          "bodyBytes": 1619,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 200,
+          "bodyBytes": 147,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 200,
+          "bodyBytes": 641,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 200,
+          "bodyBytes": 766,
+          "shaped": true
+        }
+      ],
+      "browserRequests": [
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/sw.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Evolution-DA_joxJt.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Discover-CWhceNIz.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/favicon.svg",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": true
+        }
+      ]
+    },
+    {
+      "mode": "standard",
+      "run": 3,
+      "firstResultsMs": 2756.9210999999996,
+      "readyMs": 4175.473899999997,
+      "bodyBytes": 294966,
+      "catalogueHttpRequests": 1,
+      "offlineReload": true,
+      "offlineWorkflows": true,
+      "requests": [
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 856,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "status": 200,
+          "bodyBytes": 113019,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 200,
+          "bodyBytes": 14168,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "status": 200,
+          "bodyBytes": 136042,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/sw.js",
+          "status": 200,
+          "bodyBytes": 1670,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 856,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "status": 200,
+          "bodyBytes": 1012,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Evolution-DA_joxJt.js",
+          "status": 200,
+          "bodyBytes": 1602,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "status": 200,
+          "bodyBytes": 2472,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "status": 200,
+          "bodyBytes": 1772,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "status": 200,
+          "bodyBytes": 3127,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "status": 200,
+          "bodyBytes": 13713,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/assets/Discover-CWhceNIz.js",
+          "status": 200,
+          "bodyBytes": 1619,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 200,
+          "bodyBytes": 147,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 200,
+          "bodyBytes": 641,
+          "shaped": true
+        },
+        {
+          "mode": "standard",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 200,
+          "bodyBytes": 766,
+          "shaped": true
+        }
+      ],
+      "browserRequests": [
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/sw.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Evolution-DA_joxJt.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Discover-CWhceNIz.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/favicon.svg",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-o84NczAW.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-BNDohQwV.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-q8G6-51H.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-2brX1liK.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-BvK_e-yp.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-C3R4aF6d.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": true
+        }
+      ]
+    },
+    {
+      "mode": "compact",
+      "run": 1,
+      "firstResultsMs": 2769.582000000002,
+      "readyMs": 3998.964200000002,
+      "bodyBytes": 268026,
+      "catalogueHttpRequests": 1,
+      "offlineReload": true,
+      "offlineWorkflows": true,
+      "requests": [
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 855,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "status": 200,
+          "bodyBytes": 113038,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 200,
+          "bodyBytes": 14168,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "status": 200,
+          "bodyBytes": 109102,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/sw.js",
+          "status": 200,
+          "bodyBytes": 1672,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 855,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "status": 200,
+          "bodyBytes": 1007,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Evolution-CLL7hZAL.js",
+          "status": 200,
+          "bodyBytes": 1599,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "status": 200,
+          "bodyBytes": 2468,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "status": 200,
+          "bodyBytes": 1772,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "status": 200,
+          "bodyBytes": 3125,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "status": 200,
+          "bodyBytes": 13711,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Discover-B-d9PIp8.js",
+          "status": 200,
+          "bodyBytes": 1616,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 200,
+          "bodyBytes": 147,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 200,
+          "bodyBytes": 641,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 200,
+          "bodyBytes": 766,
+          "shaped": true
+        }
+      ],
+      "browserRequests": [
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/sw.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Evolution-CLL7hZAL.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Discover-B-d9PIp8.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/favicon.svg",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": true
+        }
+      ]
+    },
+    {
+      "mode": "compact",
+      "run": 2,
+      "firstResultsMs": 2684.909599999999,
+      "readyMs": 3882.0878999999986,
+      "bodyBytes": 268026,
+      "catalogueHttpRequests": 1,
+      "offlineReload": true,
+      "offlineWorkflows": true,
+      "requests": [
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 855,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "status": 200,
+          "bodyBytes": 113038,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 200,
+          "bodyBytes": 14168,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "status": 200,
+          "bodyBytes": 109102,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/sw.js",
+          "status": 200,
+          "bodyBytes": 1672,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 855,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "status": 200,
+          "bodyBytes": 1007,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Evolution-CLL7hZAL.js",
+          "status": 200,
+          "bodyBytes": 1599,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "status": 200,
+          "bodyBytes": 2468,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "status": 200,
+          "bodyBytes": 1772,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "status": 200,
+          "bodyBytes": 3125,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "status": 200,
+          "bodyBytes": 13711,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Discover-B-d9PIp8.js",
+          "status": 200,
+          "bodyBytes": 1616,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 200,
+          "bodyBytes": 147,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 200,
+          "bodyBytes": 641,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 200,
+          "bodyBytes": 766,
+          "shaped": true
+        }
+      ],
+      "browserRequests": [
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/sw.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Evolution-CLL7hZAL.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Discover-B-d9PIp8.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/favicon.svg",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": true
+        }
+      ]
+    },
+    {
+      "mode": "compact",
+      "run": 3,
+      "firstResultsMs": 2670.8386000000028,
+      "readyMs": 3960.1637000000046,
+      "bodyBytes": 268026,
+      "catalogueHttpRequests": 1,
+      "offlineReload": true,
+      "offlineWorkflows": true,
+      "requests": [
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 855,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "status": 200,
+          "bodyBytes": 113038,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 200,
+          "bodyBytes": 14168,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "status": 200,
+          "bodyBytes": 109102,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/sw.js",
+          "status": 200,
+          "bodyBytes": 1672,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/",
+          "status": 200,
+          "bodyBytes": 855,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "status": 304,
+          "bodyBytes": 0,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "status": 200,
+          "bodyBytes": 1007,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Evolution-CLL7hZAL.js",
+          "status": 200,
+          "bodyBytes": 1599,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "status": 200,
+          "bodyBytes": 2468,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "status": 200,
+          "bodyBytes": 1772,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "status": 200,
+          "bodyBytes": 3125,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "status": 200,
+          "bodyBytes": 13711,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/assets/Discover-B-d9PIp8.js",
+          "status": 200,
+          "bodyBytes": 1616,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/favicon.svg",
+          "status": 200,
+          "bodyBytes": 331,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "status": 200,
+          "bodyBytes": 321,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/manifest.json",
+          "status": 200,
+          "bodyBytes": 416,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "status": 200,
+          "bodyBytes": 147,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/type-chart.json",
+          "status": 200,
+          "bodyBytes": 641,
+          "shaped": true
+        },
+        {
+          "mode": "compact",
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "status": 200,
+          "bodyBytes": 766,
+          "shaped": true
+        }
+      ],
+      "browserRequests": [
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/sw.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Evolution-CLL7hZAL.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/assets/Discover-B-d9PIp8.js",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/favicon.svg",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/manifest.webmanifest",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-CJSdRieQ.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/index-C7AkxRB-.css",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Compare-DK_wejR4.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSelector-D57-Mxtj.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/PokemonSummary-D1arjbc_.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/f543ff5c327b41a9/catalogue.compact-v1.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Team-R5VX9faK.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/type-chart.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/assets/Detail-x3U_VTPG.js",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/manifest.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": false
+        },
+        {
+          "path": "/PokemonPedia/data/forms/a09415e87011bed7/999.json",
+          "worker": true
+        },
+        {
+          "path": "/PokemonPedia/data/reference/bd235acbb4d65e7e/999.json",
+          "worker": true
+        }
+      ]
+    }
+  ]
+}

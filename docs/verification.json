@@ -1,22 +1,57 @@
 {
   "date": "12 October 2026",
-  "unitTests": 23,
-  "browserTests": 19,
+  "unitTests": 30,
+  "browserTests": 22,
   "auditVulnerabilities": 0,
   "featuresThrough": "F06",
   "performanceBaseline": "docs/performance-baseline.json",
+  "catalogueEvaluation": {
+    "report": "docs/catalogue-evaluation.json",
+    "parityCases": 3683,
+    "status": "data-path evaluation passed; production adoption deferred",
+    "offline": "visited details pass; unvisited split details unavailable as expected"
+  },
+  "compactApplicationEvaluation": {
+    "report": "docs/compact-application-evaluation.json",
+    "status": "passed as an opt-in production transport; standard remains default",
+    "gzipCatalogueBytesSaved": 26940,
+    "coldApplicationBytesSaved": 26922,
+    "browserModes": "21 passed standard and 21 passed compact",
+    "offline": "unvisited default summaries, comparison, teams, reload, exact 40-entry eviction and same-representation updates passed",
+    "limits": "This matched comparison uses sequential Chromium core samples and an unthrottled worker probe; subsequent migration and shared-pacing evidence is recorded separately. Broader release checks remain pending."
+  },
+  "offlineTransportValidation": {
+    "report": "docs/transport-offline-validation.json",
+    "migrationDirections": "standard to compact and compact to standard passed",
+    "failedInstallation": "active standard snapshot survived offline reload; retry recovered",
+    "collections": "favorite preserved across both explicit updates",
+    "installations": "6 passed: 3 standard and 3 compact under shared page/worker response pacing",
+    "catalogueHttpRequests": "exactly 1 in each installation",
+    "profile": "150 ms added response latency, shared 1.6 Mbps response-body pacing; media blocked, CPU/upload unshaped",
+    "limits": "Local proxy, Chromium and cached build reuse from the same batch; no TCP congestion, field/device/host verification"
+  },
+  "browserEngineValidation": {
+    "report": "docs/browser-engine-validation.json",
+    "scenariosPerProfile": 22,
+    "profiles": 6,
+    "passingExecutions": 132,
+    "engines": "Chromium 156.0.8078.4, Firefox 157.0, WebKit 27.2 on Windows",
+    "outcomes": "all passed; no skips, expected failures or flaky outcomes",
+    "fixes": "route-owned URL updates, origin-level offline fixture and dark native-control scheme",
+    "limits": "Desktop engine builds and emulated input; physical devices, screen readers, live audio, minimum browser versions, full-media/field profiling and public hosting remain pending"
+  },
   "latestValidation": {
     "date": "12 October 2026",
     "typecheck": "passed",
     "lint": "passed",
     "format": "passed including documentation",
     "productionBuild": "passed through browser test setup",
-    "unitAndApi": "23 passed",
-    "browser": "19 passed in Chromium",
-    "performanceBudgets": "passed; fresh check report stays in ignored tmp/review",
+    "unitAndApi": "30 passed",
+    "browser": "22 passed in each of Chromium, Firefox and WebKit for each build mode; 132 passing executions",
+    "performanceBudgets": "passed after route/theme fixes: standard 266055 and compact 239127 cold bytes, 40 cards, one catalogue HTTP request; fresh reports remain in ignored tmp/review/browser-engines",
     "audit": "0 vulnerabilities",
-    "planDocuments": "Word and PDF refreshed; 16 rendered pages inspected",
-    "remoteCi": "Not yet verified for the session commit"
+    "planDocuments": "Word and PDF refreshed; all 21 pages reviewed, final page split confirmed, unchanged rerenders matched prior image hashes, and sequential numbering verified from PDF text",
+    "remoteCi": "Remote CI outcome has not been verified; inspect the workflow for the requested commit and push separately from the recorded local validation"
   },
   "handoff": "docs/next-session.md"
 }

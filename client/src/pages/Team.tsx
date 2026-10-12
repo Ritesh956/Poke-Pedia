@@ -19,7 +19,7 @@ import { TypeBadge } from '@/components/TypeBadge';
 
 export default function Team() {
   const catalogue = useCatalogue(),
-    [params, setParams] = useUrlState();
+    [params, setParams] = useUrlState('/team');
   const [message, setMessage] = useState(''),
     [importError, setImportError] = useState(''),
     [busy, setBusy] = useState(false);

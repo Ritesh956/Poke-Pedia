@@ -7,11 +7,17 @@ const output =
   process.argv.find((value) => value.startsWith('--output='))?.slice(9) ??
   'docs/performance-baseline.json';
 const probeOnly = process.argv.includes('--probe-only');
+const isCatalogue = (url: string) =>
+  /\/catalogue(?:\.compact-v1)?\.json(?:\?|$)/.test(url);
 const distRoot = path.resolve(
   process.argv.find((value) => value.startsWith('--dist='))?.slice(7) ??
     'dist/public',
 );
 const html = await readFile(path.join(distRoot, 'index.html'), 'utf8');
+const workerSource = await readFile(path.join(distRoot, 'sw.js'), 'utf8');
+const catalogueTransport = workerSource.includes('/catalogue.compact-v1.json')
+  ? 'compact-v1'
+  : 'standard';
 const modulePath =
   html.match(/src="([^"]+\/assets\/[^"]+\.js)"/)?.[1] ??
   html.match(/src="(\/assets\/[^"]+\.js)"/)?.[1];
@@ -179,7 +185,7 @@ try {
   httpRequests.length = 0;
   const catalogueRequests: { url: string; worker: boolean }[] = [];
   context.on('request', (request) => {
-    if (request.url().includes('/catalogue.json'))
+    if (isCatalogue(request.url()))
       catalogueRequests.push({
         url: request.url(),
         worker: Boolean(request.serviceWorker()),
@@ -224,6 +230,7 @@ try {
       );
   const report = {
     generatedAt: new Date().toISOString(),
+    catalogueTransport,
     browserVersion: browser.version(),
     runtime: {
       node: process.version,
@@ -241,9 +248,7 @@ try {
         path: new URL(request.url).pathname,
         worker: request.worker,
       })),
-      catalogueHttpRequests: httpRequests.filter((request) =>
-        request.includes('/catalogue.json'),
-      ).length,
+      catalogueHttpRequests: httpRequests.filter(isCatalogue).length,
     },
     runs,
   };

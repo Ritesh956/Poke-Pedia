@@ -12,6 +12,7 @@
 }
 
 :root {
+  color-scheme: dark;
   --page-bg: #121212;
   --surface: #1e1e1e;
   --surface-raised: #292929;

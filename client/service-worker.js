@@ -13,7 +13,9 @@ self.addEventListener('install', (event) => {
             new Request(new URL(file, self.registration.scope), {
               cache:
                 file.startsWith('assets/') ||
-                /^data\/[a-f0-9]{16}\/catalogue\.json$/.test(file)
+                /^data\/[a-f0-9]{16}\/catalogue(?:\.compact-v1)?\.json$/.test(
+                  file,
+                )
                   ? 'force-cache'
                   : 'reload',
             }),

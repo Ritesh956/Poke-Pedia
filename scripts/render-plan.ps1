@@ -20,6 +20,13 @@ try {
 $renderDirectory = Join-Path $planRoot $OutputDirectory
 New-Item -ItemType Directory -Force -Path $renderDirectory | Out-Null
 $poppler = 'C:/Users/Ritesh Gupta/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/poppler/Library/bin/pdftoppm.exe'
-& $poppler -scale-to 1500 -png $planPdf (Join-Path $renderDirectory 'page')
-if ($LASTEXITCODE -ne 0) { throw 'Plan PDF rendering failed.' }
+$pdfinfo = Join-Path (Split-Path $poppler -Parent) 'pdfinfo.exe'
+$pageMatch = (& $pdfinfo $planPdf | Select-String '^Pages:\s+(\d+)').Matches
+if ($LASTEXITCODE -ne 0 -or $pageMatch.Count -ne 1) { throw 'Could not read plan PDF page count.' }
+$pageCount = [int]$pageMatch[0].Groups[1].Value
+# Fresh processes avoid Poppler glyph-cache artifacts across pages.
+for ($pageNumber = 1; $pageNumber -le $pageCount; $pageNumber++) {
+  & $poppler -f $pageNumber -l $pageNumber -r 144 -png $planPdf (Join-Path $renderDirectory 'page')
+  if ($LASTEXITCODE -ne 0) { throw "Plan PDF rendering failed on page $pageNumber." }
+}
 Write-Output "Updated and rendered both plan files in $renderDirectory"

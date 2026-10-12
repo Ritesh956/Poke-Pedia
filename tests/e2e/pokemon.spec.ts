@@ -71,6 +71,25 @@ test('filter keyboard semantics and empty recovery', async ({ page }) => {
   await page.getByRole('button', { name: 'Clear all filters' }).first().click();
   await expect(page.locator('.pokemon-card')).toHaveCount(40);
 });
+
+test('a pending catalogue search cannot change a slowly loading detail URL', async ({
+  page,
+}) => {
+  await page.route('**/assets/Detail-*.js', async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    await route.continue();
+  });
+  await page.goto('./');
+  await expect(page.locator('.pokemon-card')).toHaveCount(40);
+  await page.getByRole('searchbox').fill('bulba');
+  await page
+    .getByRole('link', { name: 'View Bulbasaur details', exact: true })
+    .click();
+  await expect(
+    page.getByRole('heading', { name: 'Bulbasaur', exact: true }),
+  ).toBeVisible();
+  await expect(page).toHaveURL(/#\/pokemon\/1$/);
+});
 test('comparison preselection, searchable keyboard selector, swap and reload', async ({
   page,
 }) => {
@@ -158,7 +177,8 @@ test('catalogue failure is retryable and never shows a zero-results state', asyn
   await page.getByRole('button', { name: 'Retry', exact: true }).click();
   await expect(page.locator('.pokemon-card')).toHaveCount(40);
 });
-test('responsive pages and image fallback', async ({ page }) => {
+test('responsive pages and image fallback', async ({ page }, testInfo) => {
+  const capture = `${process.env.VITE_COMPACT_CATALOGUE === '1' ? 'compact' : 'standard'}-${testInfo.project.name}`;
   test.setTimeout(60000);
   await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort());
   for (const width of [320, 390, 768, 1024, 1440]) {
@@ -194,7 +214,7 @@ test('responsive pages and image fallback', async ({ page }) => {
   await page.getByRole('img', { name: /Eevee/ }).first().waitFor();
   await page.waitForTimeout(1200);
   await page.screenshot({
-    path: 'tmp/review/implemented-desktop.png',
+    path: `tmp/review/${capture}-implemented-desktop.png`,
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
@@ -202,7 +222,7 @@ test('responsive pages and image fallback', async ({ page }) => {
   await expect(page.locator('.pokemon-card')).toHaveCount(40);
   await page.waitForTimeout(1200);
   await page.screenshot({
-    path: 'tmp/review/implemented-mobile.png',
+    path: `tmp/review/${capture}-implemented-mobile.png`,
     fullPage: false,
   });
 });

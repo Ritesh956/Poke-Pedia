@@ -1,4 +1,5 @@
 import { useCallback, useSyncExternalStore } from 'react';
+import { mergeRouteParams } from '@shared/url-params';
 const subscribe = (callback: () => void) => {
   window.addEventListener('hashchange', callback);
   window.addEventListener('popstate', callback);
@@ -7,7 +8,7 @@ const subscribe = (callback: () => void) => {
     window.removeEventListener('popstate', callback);
   };
 };
-export function useUrlState() {
+export function useUrlState(ownerRoute: string) {
   const hash = useSyncExternalStore(
     subscribe,
     () => window.location.hash,
@@ -16,18 +17,17 @@ export function useUrlState() {
   const params = new URLSearchParams(hash.split('?')[1] ?? '');
   const setParams = useCallback(
     (values: Record<string, string | null>, replace = false) => {
-      const current = window.location.hash.slice(1),
-        [route, search] = current.split('?');
-      const updated = new URLSearchParams(search);
-      for (const [key, value] of Object.entries(values)) {
-        if (value === null || value === '') updated.delete(key);
-        else updated.set(key, value);
-      }
-      const url = `${window.location.pathname}${window.location.search}#${route || '/'}${updated.size ? '?' + updated.toString() : ''}`;
+      const updated = mergeRouteParams(
+        window.location.hash,
+        ownerRoute,
+        values,
+      );
+      if (updated === null) return;
+      const url = `${window.location.pathname}${window.location.search}#${updated}`;
       window.history[replace ? 'replaceState' : 'pushState'](null, '', url);
       window.dispatchEvent(new HashChangeEvent('hashchange'));
     },
-    [],
+    [ownerRoute],
   );
   return [params, setParams] as const;
 }
